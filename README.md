@@ -1,5 +1,5 @@
 # Spotiweb
-
+Students: Felipe Obando Arrieta y Pablo Arias Navarro.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
 
 ## Development server
