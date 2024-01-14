@@ -35,6 +35,7 @@ export interface AlbumElement {
   total_tracks:           number;
   type:                   AlbumTypeEnum;
   uri:                    string;
+  tracks?:                Tracks[];
 }
 
 export enum AlbumTypeEnum {
