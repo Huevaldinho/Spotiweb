@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from '../../../shared/services/spotify.service';
+import { SpotifyService } from '../../shared/services/spotify.service';
 @Component({
   selector: 'app-home-page',
   standalone: true,

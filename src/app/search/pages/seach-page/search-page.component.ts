@@ -11,6 +11,7 @@ import { SpotifyService } from '../../../shared/services/spotify.service';
 })
 export class SeachPageComponent {
 
+
   constructor(private spotifyService: SpotifyService) { }
 
 
@@ -20,7 +21,10 @@ export class SeachPageComponent {
 
   search(term: string): void {
     console.log("search method in search-page.component.ts")
-    this.spotifyService.search(term);
+    this.spotifyService.search(term).subscribe(
+      (response) => console.log(response),
+      (error) => console.error(error)
+    );
   }
 
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { Search, SpotiToken } from '../interfaces/spotify.interfaces';
 
 @Injectable({
@@ -56,18 +56,24 @@ export class SpotifyService {
   }
 
 
-  search(term: string): Observable<Search | null> {
-    return of(null);
-  }
-  // search(term: string): Observable<Search> {
-  //   const url = `https://api.spotify.com/v1/search?q=${term}&type=album,track`;
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${this.token}`
-  //   });
-  //   return this.http.get<Search>(url, { headers })
-  //     .pipe(
-  //       catchError(() => of(null))
-  //     );
+  // search(term: string): Observable<Search | null> {
+  //   return of(null);
   // }
+  search(query: string) : Observable<Search | null> {
+    const url = `${this.apiUrl}/search/?q=${query}&type=album,track`;
+    console.log("Requesting:", url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getAccessToken_()}`,
+      // Add any other headers if needed
+    });
+    console.log("Header: ", headers);
+
+
+    return this.httpClient.get<Search|null>(url, { headers }).pipe(
+      map((response) => response),
+      catchError(() => of(null))
+    );
+
+  }
 
 }

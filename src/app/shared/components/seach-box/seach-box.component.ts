@@ -19,7 +19,4 @@ export class SeachBoxComponent {
   emitValue(value: string): void {
     this.onValue.emit(value);
   }
-
-
-
 }
