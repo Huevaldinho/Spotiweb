@@ -12,4 +12,8 @@ export class SpotyCardComponent {
   @Input() public artitsList: string[] = [];
   @Input() public image: string = '';
 
+  get titleFixed(): string {
+    return this.cardTitle.length > 20 ? this.cardTitle.substr(0, 20) + '...' : this.cardTitle;
+  }
+
 }

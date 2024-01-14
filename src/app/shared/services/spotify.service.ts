@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { Search, SpotiToken } from '../interfaces/spotify.interfaces';
+import { Observable, catchError, map, of } from 'rxjs';
+import { AlbumElement, AlbumSearchResponse, SpotiToken, TrackSearchResponse, TracksItem } from '../interfaces/spotify.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -50,16 +50,40 @@ export class SpotifyService {
       )
   }
 
-
-  search(query: string) : Observable<Search | null> {
-    const url = `${this.apiUrl}/search/?q=${query}&type=album,track`;
+  // searchAlbumsAndTracks(query: string): Observable<Search | null> {
+  //   const url = `${this.apiUrl}/search/?q=${query}&type=album,track`;
+  //   console.log("Requesting:", url);
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${this.getAccessToken_()}`,
+  //   });
+  //   return this.httpClient.get<Search | null>(url, { headers }).
+  //     pipe(
+  //       map((response) => response),
+  //       catchError(() => of(null))
+  //     );
+  // }
+  searchAlbums(query: string): Observable<AlbumElement[] | null> {
+    const url = `${this.apiUrl}/search/?q=${query}&type=album`;
     console.log("Requesting:", url);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
     });
-    return this.httpClient.get<Search|null>(url, { headers }).
+    return this.httpClient.get<AlbumSearchResponse|null>(url, { headers }).
       pipe(
-        map((response) => response),
+        map((response) => response?.albums.items||null),
+        catchError(() => of(null))
+      );
+  }
+
+  searchTracks(query: string): Observable<TracksItem[] | null> {
+    const url = `${this.apiUrl}/search/?q=${query}&type=track`;
+    console.log("Requesting:", url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getAccessToken_()}`,
+    });
+    return this.httpClient.get<TrackSearchResponse|null>(url, { headers })
+      .pipe(
+        map((response) => response?.tracks.items||null),
         catchError(() => of(null))
       );
   }

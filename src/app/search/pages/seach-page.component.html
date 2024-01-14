@@ -1,0 +1,41 @@
+<!--Search box-->
+<div class="bg-dark flex-fill p-3 rounded m-1" id="seachBoxContainer">
+  <shared-seach-box
+    (onValue)="searchAlbums($event)"
+    placeholder="Buscar cancion o artista"
+  ></shared-seach-box>
+</div>
+
+<!--Search result-->
+<div class= "bg-dark flex-fill p-3 rounded text-center mt-5 mx-3"
+     id   = "searchResultContainer"  >
+
+    <div class="btn-group p-1 m-1 " role="group" aria-label="Default button group">
+      <button type="button"
+              class="btn btn-outline-success"
+              (click)="this.filterByAlbum()"
+              #albumsBtn
+      >
+        Albums
+      </button>
+      <button type="button"
+              class="btn btn-outline-success"
+              (click)="this.filterByTrack()"
+              #trackBtn
+      >
+        Canciones
+      </button>
+    </div>
+    <span class="placeholder col-12 bg-success mb-2 mt-2"></span>
+
+    <!--Inyects the search result into the card list component-->
+    @if(this.albums.length>0){
+      <shared-spoty-card-list
+          [albums]="this.albums"
+          [tracks]="this.tracks"
+          [showAlbums]="this.showAlbums"
+          [showTracks]="this.showTracks"
+      ></shared-spoty-card-list>
+    }
+
+</div>
