@@ -18,18 +18,13 @@ export class SpotifyService {
 
   constructor(private httpClient: HttpClient) { }
 
-  // body = {
-  //     'grant_type': "client_credentials",
-  // };
   body = 'grant_type=client_credentials';
-
   options = {
     headers: new HttpHeaders({
       'Authorization': 'Basic '.concat(this.idAndSecret),
       'Content-Type': 'application/x-www-form-urlencoded',
     })
   };
-
 
   getAccessToken_(): string {
     if (this.token) {
@@ -43,7 +38,7 @@ export class SpotifyService {
         catchError(() => of(''))
       )
       .subscribe(token => { this.token = token; });
-
+    console.log("Generated token: ", this.token);
     return this.token;
   }
 
@@ -56,24 +51,16 @@ export class SpotifyService {
   }
 
 
-  // search(term: string): Observable<Search | null> {
-  //   return of(null);
-  // }
   search(query: string) : Observable<Search | null> {
     const url = `${this.apiUrl}/search/?q=${query}&type=album,track`;
     console.log("Requesting:", url);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
-      // Add any other headers if needed
     });
-    console.log("Header: ", headers);
-
-
-    return this.httpClient.get<Search|null>(url, { headers }).pipe(
-      map((response) => response),
-      catchError(() => of(null))
-    );
-
+    return this.httpClient.get<Search|null>(url, { headers }).
+      pipe(
+        map((response) => response),
+        catchError(() => of(null))
+      );
   }
-
 }

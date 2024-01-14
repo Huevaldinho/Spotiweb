@@ -1,31 +1,36 @@
 import { Component } from '@angular/core';
 import { SeachBoxComponent } from "../../../shared/components/seach-box/seach-box.component";
 import { SpotifyService } from '../../../shared/services/spotify.service';
+import { Search } from '../../../shared/interfaces/spotify.interfaces';
+import { SpotyCardListComponent } from '../../../shared/components/spoty-card-list/spoty-card-list.component';
 
 @Component({
   selector: 'seach-page',
   standalone: true,
   templateUrl: './seach-page.component.html',
   styles: ``,
-  imports: [SeachBoxComponent]
+  imports: [SeachBoxComponent,SpotyCardListComponent]
 })
 export class SeachPageComponent {
-
+  public searchResponse : Search | null = null;
 
   constructor(private spotifyService: SpotifyService) { }
 
-
   ngOnInit(): void {
-    this.spotifyService.getAccessToken_();
   }
 
   search(term: string): void {
-    console.log("search method in search-page.component.ts")
     this.spotifyService.search(term).subscribe(
-      (response) => console.log(response),
+      (response) => {
+        if (response){
+          this.searchResponse = response
+          console.log('Search response: ', this.searchResponse)
+        }
+      },
       (error) => console.error(error)
     );
   }
+
 
 
 }

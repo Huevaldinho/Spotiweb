@@ -1,7 +1,16 @@
-<div class="bg-dark container p-3 rounded" id="seachPageContainer">
-  <h3 class="text-white text-center">Buscar artista o cancion 😎</h3>
+<!--Search box-->
+<div class="bg-dark flex-fill p-3 rounded m-1" id="seachBoxContainer">
+  <h3 class="text-white text-center">Buscar canción o artista 😎</h3>
   <shared-seach-box
     (onValue)="search($event)"
     placeholder="Buscar cancion o artista"
   ></shared-seach-box>
+</div>
+<!--Search result-->
+<div class= "bg-dark flex-fill p-3 rounded text-center mt-5 mx-3"
+     id   = "searchResultContainer"  >
+     <!--Inyects the search result into the card list component-->
+      <shared-spoty-card-list
+      [searchResult]="this.searchResponse"
+      ></shared-spoty-card-list>
 </div>
