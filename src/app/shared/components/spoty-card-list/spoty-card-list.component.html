@@ -14,7 +14,9 @@
           <shared-spoty-card
                       [cardTitle]="album.name"
                       [image]="this.album.images[0].url"
-                      [artitsList]="this.getAlbumArtits(this.album)" >
+                      [artitsList]="this.getAlbumArtits(this.album)"
+                      >
+                      <!--Agregar id al album y recibirlo en la card-->
           </shared-spoty-card>
         </div>
         }
@@ -27,14 +29,12 @@
           <shared-spoty-card
                         [cardTitle]="track.name"
                         [image]="this.track.album.images[0].url"
-                        [artitsList]="this.trackArtists(this.track.artists)" >
+                        [artitsList]="this.trackArtists(this.track.artists)"
+          >
           </shared-spoty-card>
         </div>
         }
       </div>
-
     }
-
-
   }
 </div>

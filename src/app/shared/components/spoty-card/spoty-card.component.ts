@@ -15,5 +15,6 @@ export class SpotyCardComponent {
   get titleFixed(): string {
     return this.cardTitle.length > 20 ? this.cardTitle.substr(0, 20) + '...' : this.cardTitle;
   }
+  //TODO : Redirect a la pagina de album con el id del album o roto Struct
 
 }

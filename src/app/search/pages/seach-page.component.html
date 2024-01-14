@@ -29,7 +29,7 @@
     <span class="placeholder col-12 bg-success mb-2 mt-2"></span>
 
     <!--Inyects the search result into the card list component-->
-    @if(this.albums.length>0){
+    @if(this.albums.length>0 || this.tracks.length>0){
       <shared-spoty-card-list
           [albums]="this.albums"
           [tracks]="this.tracks"
