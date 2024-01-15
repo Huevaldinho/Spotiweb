@@ -5,7 +5,6 @@ import { AlbumElement, TracksItem } from '../../shared/interfaces/spotify.interf
 import { SpotyCardListComponent } from "../../shared/components/spoty-card-list/spoty-card-list.component";
 import { SeachBoxComponent } from "../../shared/components/seach-box/seach-box.component";
 import { StorageService }  from '../../shared/services/storage.service';
-import { FormsModule } from '@angular/forms';
 @Component({
     selector: 'seach-page',
     standalone: true,
