@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { Search, SpotiToken } from '../interfaces/spotify.interfaces';
+import { Observable, catchError, map, of } from 'rxjs';
+import { AlbumElement, AlbumSearchResponse, SpotiToken, TrackSearchResponse, TracksItem } from '../interfaces/spotify.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,10 @@ export class SpotifyService {
   private apiUrl: string = 'https://api.spotify.com/v1';
 
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
-  // body = {
-  //     'grant_type': "client_credentials",
-  // };
   body = 'grant_type=client_credentials';
-
   options = {
     headers: new HttpHeaders({
       'Authorization': 'Basic '.concat(this.idAndSecret),
@@ -30,12 +27,11 @@ export class SpotifyService {
     })
   };
 
-
   getAccessToken_(): string {
-    if (this.token) {
-      console.log("Token already exists:", this.token);
-      return this.token;
-    }
+    // if (this.token) {
+    //   console.log("Token already exists:", this.token);
+    //   return this.token;
+    // }
     const url = this.tokenUrl;
     this.httpClient.post<SpotiToken>(url, this.body, this.options)
       .pipe(
@@ -43,7 +39,7 @@ export class SpotifyService {
         catchError(() => of(''))
       )
       .subscribe(token => { this.token = token; });
-
+    console.log("Generated token: ", this.token);
     return this.token;
   }
 
@@ -55,25 +51,48 @@ export class SpotifyService {
       )
   }
 
-
-  // search(term: string): Observable<Search | null> {
-  //   return of(null);
-  // }
-  search(query: string) : Observable<Search | null> {
-    const url = `${this.apiUrl}/search/?q=${query}&type=album,track`;
+  searchAlbums(query: string): Observable<AlbumElement[] | null> {
+    const url = `${this.apiUrl}/search/?q=${query}&type=album`;
     console.log("Requesting:", url);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
-      // Add any other headers if needed
     });
-    console.log("Header: ", headers);
-
-
-    return this.httpClient.get<Search|null>(url, { headers }).pipe(
-      map((response) => response),
-      catchError(() => of(null))
-    );
-
+    return this.httpClient.get<AlbumSearchResponse|null>(url, { headers }).
+      pipe(
+        map((response) => response?.albums.items||null),
+        catchError(() => of(null))
+      );
   }
 
+  searchTracks(query: string): Observable<TracksItem[] | null> {
+    const url = `${this.apiUrl}/search/?q=${query}&type=track`;
+    console.log("Requesting:", url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getAccessToken_()}`,
+    });
+    return this.httpClient.get<TrackSearchResponse|null>(url, { headers })
+      .pipe(
+        map((response) => response?.tracks.items||null),
+        catchError(() => of(null))
+      );
+  }
+  searchNewAlbumReleases(): Observable<AlbumElement[] | null> {
+    const url = `${this.apiUrl}/browse/new-releases`;
+    console.log("Requesting:", url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getAccessToken_()}`,
+    });
+    return this.httpClient.get<AlbumSearchResponse|null>(url, { headers })
+      .pipe(
+        map((response) => response?.albums.items||null),
+        catchError(() => of(null))
+      );
+  }
+
+  oembeded():void{
+    //https://open.spotify.com/embed/album/2ODvWsOgouMbaA5xf0RkJe?utm_source=oembed
+
+  //<div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe [src]="" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe></div>
+
+  }
 }

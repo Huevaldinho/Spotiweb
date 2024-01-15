@@ -3,8 +3,11 @@ export interface SpotiToken {
   token_type:   string;
   expires_in:   number;
 }
-export interface Search {
+
+export interface AlbumSearchResponse{
   albums: Albums;
+}
+export interface TrackSearchResponse{
   tracks: Tracks;
 }
 
@@ -32,6 +35,7 @@ export interface AlbumElement {
   total_tracks:           number;
   type:                   AlbumTypeEnum;
   uri:                    string;
+  tracks?:                Tracks[];
 }
 
 export enum AlbumTypeEnum {
