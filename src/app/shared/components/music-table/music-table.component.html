@@ -8,7 +8,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr><td>{{album.tracks[0].name}}</td></tr>
+    @for (track of album.tracks.items; track $index) {
+      <tr>
+        <td>foto</td>
+        <td>Album</td>
+        <td>{{track.name}}</td>
+      </tr>
+    }
 
 
   </tbody>

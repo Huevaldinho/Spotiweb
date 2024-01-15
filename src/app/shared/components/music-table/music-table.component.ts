@@ -13,4 +13,8 @@ export class MusicTableComponent {
   @Input()
   public album!: AlbumElement;
 
+  onClick():void{
+    console.log(this.album.tracks.items[0])
+  }
+
 }
