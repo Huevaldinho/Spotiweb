@@ -1,11 +1,28 @@
+@if(this.artist && this.album){
+  <div class="bg-black mx-2">
+    <div class="row">
+      <div class="d-flex col-3 m-2 justify-content-center align-items-center">
+        <img class="rounded-circle border border-5 " [src]="artist.images?.[1]?.url" alt="" [width]="artist.images?.[1]?.width" [height]="artist.images?.[1]?.height">
+      </div>
+      <div class="d-flex col mt-5 justify-content-between">
+        <div>
+          <h1 class="text-light">{{this.album.artists[0].name}}</h1>
+          <a [href]="artist.external_urls.spotify" class="text-success fs-5">Ir a la página del artista</a>
+        </div>
+        <div class="mx-5">
+          <button type="button" class="btn btn-success px-4 py-2">Regresar</button>
+        </div>
+      </div>
+    </div>
+    <hr class="border border-light border-1 opacity-75 mx-4">
 
-  <div class="row bg-black mx-2">
-    <div class="col-3">
-      <span class="bg-danger text-center"> <p class="text-warning">FOTO</p></span>
+    <div class="d-flex row m-2">
+      <shared-music-table [album]='album'></shared-music-table>
     </div>
-    <div class="col">
-      <!-- <h1 class="text-light">{{this.album.artists[0].name}}</h1> -->
-    </div>
+
+
   </div>
+}
+
 
 

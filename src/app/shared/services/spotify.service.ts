@@ -55,7 +55,6 @@ export class SpotifyService {
       )
   }
 
-
   // search(term: string): Observable<Search | null> {
   //   return of(null);
   // }
@@ -73,30 +72,29 @@ export class SpotifyService {
     );
   }
 
-  artistInfo(id: string) : Observable<Artist | null> {
+  artistInfo(id: string) : Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
-    console.log("Requesting:", url);
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.getAccessToken_()}`,
+      'Authorization': `Bearer BQAiSYgOjQJtWwcjJXIBPregJehNiwKqK3Vx881fLXakmi9YxCJHAQHRS6HSEVqVnEP-CWtWRzZljBJF-Cu-mIGw2BkP5xUMASCeabP6vqWg6mtF-0Q`,
       // Add any other headers if needed
     });
-    console.log("Header: ", headers);
-    return this.httpClient.get<Artist | null>(url, { headers }).pipe(
+    return this.httpClient.get<Artist>(url, { headers }).pipe(
       map((response) => response),
-      catchError(() => of(null))
+      catchError(() => of())
     );
   }
 
   // to obtain all the album info and tracks
-  // albumInfo(id: string): Observable<AlbumElement> {
-  //   const url = `${this.apiUrl}/albums/${id}`;
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${this.getAccessToken_()}`,
-  //     // Agrega cualquier otro encabezado si es necesario
-  //   });
-  //   return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
-  //     catchError(() => of())
-  //   );
-  // }
+  albumInfo(id: string): Observable<AlbumElement> {
+    const url = `${this.apiUrl}/albums/${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer BQAiSYgOjQJtWwcjJXIBPregJehNiwKqK3Vx881fLXakmi9YxCJHAQHRS6HSEVqVnEP-CWtWRzZljBJF-Cu-mIGw2BkP5xUMASCeabP6vqWg6mtF-0Q`,
+      // Agrega cualquier otro encabezado si es necesario
+    });
+    return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
+      map((response) => response),
+      catchError(() => of())
+    );
+  }
 
 }

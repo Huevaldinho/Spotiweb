@@ -30,7 +30,7 @@ export interface AlbumElement {
   release_date:           Date;
   release_date_precision: ReleaseDatePrecision;
   total_tracks:           number;
-  tracks?:                Tracks[];
+  tracks:                 TracksItem[]; //*
   type:                   AlbumTypeEnum;
   uri:                    string;
 }

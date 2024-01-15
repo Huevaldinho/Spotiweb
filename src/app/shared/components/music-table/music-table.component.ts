@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { AlbumElement } from '../../interfaces/spotify.interfaces';
 
 @Component({
-  selector: 'app-music-table',
+  selector: 'shared-music-table',
   standalone: true,
   imports: [],
   templateUrl: './music-table.component.html',
   styles: ``
 })
 export class MusicTableComponent {
+
+  @Input()
+  public album!: AlbumElement;
 
 }
