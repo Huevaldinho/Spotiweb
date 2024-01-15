@@ -1,7 +1,26 @@
-<div class="bg-dark container rounded-1" id="homePageContainer">
+<div class="bg-dark flex-fill p-3 rounded m-1 mb-3" id="homeContainer">
   \
   <!--OJO : Posible espacio para publicidad <div><div>-->
-  <h3 class="text-white text-center">Home page</h3>
-
-  <!--TODO: TODO HOME-->
+  <h2 class="text-white text-center"><strong><i>Bienvenidos a Spotiweb!</i></strong></h2>
+  <div class="text-center flex-fit mb-3">
+    <img src="https://cdn.digitbin.com/wp-content/uploads/How-to-Fix-Spotify-Web-Player-Not-Working.png"
+         alt="Spotiweb"
+         class="img-fluid rounded"
+          style="width: 30%; height: 30%;"
+    >
+  </div>
+</div>
+<div class="flex-fill p-3 m-1">
+    <div class="row">
+      @for(album of this.newAlbumReleases ; track $index){
+        <div class="col-md-2 col-sm-4">
+        <shared-spoty-card
+                      [cardTitle]="album.name"
+                      [image]="this.album.images[0].url"
+                      [artitsList]="this.trackArtists(this.album.artists)"
+        >
+        </shared-spoty-card>
+      </div>
+    }
+    </div>
 </div>

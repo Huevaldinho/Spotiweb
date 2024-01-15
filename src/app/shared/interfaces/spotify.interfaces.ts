@@ -3,8 +3,11 @@ export interface SpotiToken {
   token_type:   string;
   expires_in:   number;
 }
-export interface Search {
+
+export interface AlbumSearchResponse{
   albums: Albums;
+}
+export interface TrackSearchResponse{
   tracks: Tracks;
 }
 
