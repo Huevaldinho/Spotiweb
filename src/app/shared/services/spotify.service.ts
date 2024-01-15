@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
-import { AlbumElement, AlbumSearchResponse, SpotiToken, TrackSearchResponse, TracksItem } from '../interfaces/spotify.interfaces';
+import { Observable, catchError, map, of,throwError } from 'rxjs';
+import { AlbumElement, AlbumSearchResponse, Artist, SpotiToken, TrackSearchResponse, TracksItem } from '../interfaces/spotify.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -94,5 +94,33 @@ export class SpotifyService {
 
   //<div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe [src]="" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe></div>
 
+
   }
+
+  artistInfo(id: string) : Observable<Artist | null> {
+    const url = `${this.apiUrl}/artists/${id}`;
+    console.log("Requesting:", url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getAccessToken_()}`,
+      // Add any other headers if needed
+    });
+    console.log("Header: ", headers);
+    return this.httpClient.get<Artist | null>(url, { headers }).pipe(
+      map((response) => response),
+      catchError(() => of(null))
+    );
+  }
+
+  // to obtain all the album info and tracks
+  // albumInfo(id: string): Observable<AlbumElement> {
+  //   const url = `${this.apiUrl}/albums/${id}`;
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${this.getAccessToken_()}`,
+  //     // Agrega cualquier otro encabezado si es necesario
+  //   });
+  //   return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
+  //     catchError(() => of())
+  //   );
+  // }
+
 }
