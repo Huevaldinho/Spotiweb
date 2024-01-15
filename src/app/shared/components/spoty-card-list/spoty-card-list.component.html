@@ -2,10 +2,8 @@
   @if(this.albums.length==0 && this.tracks.length==0){
     <h3 class="text-white">Sin resultados </h3>
   }@else{
-    @if(!this.showTracks&&!this.showAlbums){
+    @if(!this.showTracks &&! this.showAlbums){
       <h3 class="text-white">Seleccione Albums o Canciones</h3>
-    }@else{
-      <h3 class="text-white"> Resultado de búsqueda: </h3>
     }
     @if(this.albums.length>0 && this.showAlbums){
       <div class="row">
@@ -15,6 +13,7 @@
                       [cardTitle]="album.name"
                       [image]="this.album.images[0].url"
                       [artitsList]="this.getAlbumArtits(this.album)"
+                      [id]="album.id"
                       >
                       <!--Agregar id al album y recibirlo en la card-->
           </shared-spoty-card>
