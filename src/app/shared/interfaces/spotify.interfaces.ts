@@ -36,7 +36,6 @@ export interface AlbumElement {
   tracks?:                Tracks[];
   type:                   AlbumTypeEnum;
   uri:                    string;
-  tracks?:                Tracks[];
 }
 
 export enum AlbumTypeEnum {
