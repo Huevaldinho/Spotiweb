@@ -92,9 +92,7 @@ export class SpotifyService {
 
   oembeded():void{
     //https://open.spotify.com/embed/album/2ODvWsOgouMbaA5xf0RkJe?utm_source=oembed
-
   //<div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe [src]="" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe></div>
-
 
   }
 
@@ -120,6 +118,21 @@ export class SpotifyService {
     return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
       map((response) => response),
       catchError(() => of())
+    );
+  }
+
+   // to obtain all the top artist song in a specific market
+   topSongsInfo(id: string): Observable<TracksItem[]> {
+    //const url = `${this.apiUrl}/artist/${id}/top-tracks?market=ES`;
+    const url = 'https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg/top-tracks?market=ES'
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer BQCB5zZqTo1hn672qR8XthO9kd44bAXBw84V0-ZguCYcefUSFB2A6TNc08ABgFW8zlGaDhgWz7uuOtyIvmf0WFxm4fRv0G74nfFsv9HD0adW2PW4xp0`,  // Reemplaza esto con tu token de Spotify
+      // Agrega cualquier otro encabezado si es necesario
+    });
+
+    return this.httpClient.get<{tracks:TracksItem[]}>(url, { headers }).pipe(
+      map(response => response.tracks),
+      catchError(() => of([]))
     );
   }
 

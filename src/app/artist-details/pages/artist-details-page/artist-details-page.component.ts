@@ -15,11 +15,12 @@ export class ArtistDetailsPageComponent {
   @Input()
   private idArtista: string = '4oLeXFyACqeem2VImYeBFe';
   private idAlbum: string = '7tWP3OG5dWphctKg4NMACt';
-  private typeList: boolean = false; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
+  private typeList: boolean = true; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
 
 
   public album!: AlbumElement;
   public artist!: Artist;
+  public topSongs!: TracksItem[];
   //public tracksList!: TracksItem[];
 
   constructor(private spotifyService: SpotifyService){}
@@ -27,6 +28,7 @@ export class ArtistDetailsPageComponent {
   ngOnInit(){
     this.spotifyService.getAccessToken_();
     this.artistInfo(this.idArtista);
+    this.topSongInfo(this.idArtista)
     this.albumInfo(this.idAlbum);
   }
 
@@ -67,13 +69,21 @@ export class ArtistDetailsPageComponent {
       for (const track of tracks) {
         track.album = trackAlbum;
         tracksList.push(track);
-        console.log("iteracion", tracksList)
+        //console.log("iteracion", tracksList)
       }
     } else {
       // aqui el otro lado
+      return this.topSongs
     }
-    console.log("lo que ocupo", tracksList)
+    //console.log("lo que ocupo", tracksList)
     return tracksList
+  }
+
+  topSongInfo(id: string):void{
+    this.spotifyService.topSongsInfo(id).subscribe(
+      (response) => {this.topSongs = response, console.log(this.topSongs)},
+      (error) => console.error(error)
+    );
   }
 
   artistInfo(id: string):void{
