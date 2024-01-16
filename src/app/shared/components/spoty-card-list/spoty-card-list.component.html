@@ -25,12 +25,14 @@
       <div class="row">
         @for(track of this.tracks ; track $index){
           <div class="col-md-2 col-sm-4">
+
           <shared-spoty-card
                         [cardTitle]="track.name"
                         [image]="this.track.album.images[0].url"
                         [artitsList]="this.trackArtists(this.track.artists)"
           >
           </shared-spoty-card>
+
         </div>
         }
       </div>

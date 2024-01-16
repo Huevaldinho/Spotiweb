@@ -16,5 +16,4 @@ export class MusicTableComponent {
   onClick():void{
     console.log(this.album.tracks.items[0])
   }
-
 }

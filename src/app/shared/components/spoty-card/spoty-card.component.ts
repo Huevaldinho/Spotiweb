@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'shared-spoty-card',
@@ -14,6 +14,7 @@ export class SpotyCardComponent {
   @Input() public image: string = '';
   @Input() public id: string = '';
 
+
   get titleFixed(): string {
     return this.cardTitle.length > 20 ? this.cardTitle.substr(0, 20) + '...' : this.cardTitle;
   }
@@ -25,10 +26,19 @@ export class SpotyCardComponent {
     return '';
   }
 
+  //TODO: Hacer hover en el span de artista
+
+
+  goToArtist(value: string):void {
+    console.log('Go to artist: ', value);
+
+
+
+  }
 
   playSong() {
     throw new Error('Method not implemented.');
-    }
-  //TODO : Redirect a la pagina de album con el id del album o roto Struct
+
+  }
 
 }
