@@ -50,7 +50,6 @@ export class HomePageComponent {
 
   trackArtists(artists:Artist[]) : string [] {
     if (artists.length > 0){
-      console.log("Holaaaa")
       return artists.map(artist => artist.name);
     }
     return [];
