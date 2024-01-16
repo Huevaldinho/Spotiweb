@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { AlbumElement } from '../../interfaces/spotify.interfaces';
+import { TracksItem } from '../../interfaces/spotify.interfaces';
+import { SpotifyService } from '../../services/spotify.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'shared-music-table',
@@ -9,12 +11,18 @@ import { AlbumElement } from '../../interfaces/spotify.interfaces';
   styles: ``
 })
 export class MusicTableComponent {
+  constructor (private spotifyService: SpotifyService, private sanitizer: DomSanitizer){}
 
   @Input()
-  public album!: AlbumElement;
+  public tracks!: TracksItem[];
 
-  onClick():void{
-    console.log(this.album.tracks.items[0])
+  onClick(str: TracksItem): void{
+    console.log("se cae")
+    console.log("este es el nombre del album", str);
+  }
+
+  embedURL(id: string): SafeResourceUrl{
+    return this.spotifyService.embedURL(id)
   }
 
 }

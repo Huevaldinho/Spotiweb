@@ -1,22 +1,26 @@
-<table class="table table-hover">
+<table class="table table-hover text-center">
   <thead>
     <tr>
-      <th>Foto</th>
-      <th>Album</th>
-      <th>Canción</th>
-      <th>Vista Previa</th>
+      <th class="bg-black text-light">Foto</th>
+      <th class="bg-black text-light">Album</th>
+      <th class="bg-black text-light">Canción</th>
+      <th class="bg-black text-light">Vista Previa</th>
     </tr>
   </thead>
-  <tbody>
-    @for (track of album.tracks.items; track $index) {
+  <tbody >
+    @for (track of tracks; track $index) {
       <tr>
-        <td>foto</td>
-        <td>Album</td>
-        <td>{{track.name}}</td>
+        <!-- <td><button type="button" (click)="onClick(track)" class="btn btn-danger">aqui</button></td> -->
+        <td class="align-items-end justify-content-end bg-black text-light align-middle"> <img [src]="track.album.images[2].url" [alt]="" [width]="track.album.images[2].width" [height]="track.album.images[2].height"></td>
+        <td class="bg-black text-light align-middle">{{track.album.name}}</td>
+        <td class="bg-black text-light align-middle">{{track.name}}</td>
+        <td class="bg-black text-light align-middle pt-4">
+          <div class="d-flex align-items-center">
+            <iframe style="border-radius:12px" [src]="embedURL(track.id)" width="100%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </td>
       </tr>
     }
-
-
   </tbody>
 </table>
 

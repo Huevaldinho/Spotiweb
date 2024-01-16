@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of,throwError } from 'rxjs';
 import { AlbumElement, AlbumSearchResponse, Artist, SpotiToken, TrackSearchResponse, TracksItem } from '../interfaces/spotify.interfaces';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class SpotifyService {
   private apiUrl: string = 'https://api.spotify.com/v1';
 
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private sanitizer: DomSanitizer) {
   }
 
   body = 'grant_type=client_credentials';
@@ -100,7 +101,7 @@ export class SpotifyService {
   artistInfo(id: string) : Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQAiSYgOjQJtWwcjJXIBPregJehNiwKqK3Vx881fLXakmi9YxCJHAQHRS6HSEVqVnEP-CWtWRzZljBJF-Cu-mIGw2BkP5xUMASCeabP6vqWg6mtF-0Q`,
+      'Authorization': `Bearer BQA68xatW_yXjVBJXerLLN6uG18SkIFeUNRE9euiGdAvWMzIqAGvWFQ1pZt4CiuZJMv_NidEdxkFNoW7gTOdHbfU0Hc7v6VS4fWrmdnhAUy6RTR1VC8`,
       // Add any other headers if needed
     });
     return this.httpClient.get<Artist>(url, { headers }).pipe(
@@ -113,13 +114,18 @@ export class SpotifyService {
   albumInfo(id: string): Observable<AlbumElement> {
     const url = `${this.apiUrl}/albums/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQAiSYgOjQJtWwcjJXIBPregJehNiwKqK3Vx881fLXakmi9YxCJHAQHRS6HSEVqVnEP-CWtWRzZljBJF-Cu-mIGw2BkP5xUMASCeabP6vqWg6mtF-0Q`,
+      'Authorization': `Bearer BQA68xatW_yXjVBJXerLLN6uG18SkIFeUNRE9euiGdAvWMzIqAGvWFQ1pZt4CiuZJMv_NidEdxkFNoW7gTOdHbfU0Hc7v6VS4fWrmdnhAUy6RTR1VC8`,
       // Agrega cualquier otro encabezado si es necesario
     });
     return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
       map((response) => response),
       catchError(() => of())
     );
+  }
+
+  embedURL(id: string):SafeResourceUrl{
+    const url = `https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }
