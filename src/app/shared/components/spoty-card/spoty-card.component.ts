@@ -1,9 +1,10 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component,  Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'shared-spoty-card',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './spoty-card.component.html',
   styles: ``
 })
@@ -12,7 +13,17 @@ export class SpotyCardComponent {
   @Input() public cardTitle : string='Nombre album o cancion';
   @Input() public artitsList: string[] = [];
   @Input() public image: string = '';
-  @Input() public id: string = '';
+  @Input() public type_: string='';
+  @Input() public id_: string='';
+
+
+  constructor() {
+  }
+
+
+  goToArtist():void{
+    console.log("Id y type en card: ", this.id_, this.type_,this.cardTitle);
+  }
 
 
   get titleFixed(): string {
@@ -21,24 +32,13 @@ export class SpotyCardComponent {
 
   getIframeSrc(): string {
     //https://open.spotify.com/embed/album/2ODvWsOgouMbaA5xf0RkJe?utm_source=oembed
-    if (this.id!='')
-      return `https://open.spotify.com/embed/album/${this.id}?utm_source=oembed`;
+    if (this.id_!='')
+      return `https://open.spotify.com/embed/album/${this.id_}?utm_source=oembed`;
     return '';
-  }
-
-  //TODO: Hacer hover en el span de artista
-
-
-  goToArtist(value: string):void {
-    console.log('Go to artist: ', value);
-
-
-
   }
 
   playSong() {
     throw new Error('Method not implemented.');
-
   }
 
 }

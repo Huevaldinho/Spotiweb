@@ -123,6 +123,8 @@ export class SpotifyService {
     );
   }
 
+  //*For tracks ONLY
+  //id del cancion
   embedURL(id: string):SafeResourceUrl{
     const url = `https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);

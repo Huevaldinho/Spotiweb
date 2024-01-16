@@ -8,15 +8,15 @@
     </tr>
   </thead>
   <tbody >
-    @for (track of tracks; track $index) {
+    @for (track_ of tracks; track $index) {
       <tr>
         <!-- <td><button type="button" (click)="onClick(track)" class="btn btn-danger">aqui</button></td> -->
-        <td class="align-items-end justify-content-end bg-black text-light align-middle"> <img [src]="track.album.images[2].url" [alt]="" [width]="track.album.images[2].width" [height]="track.album.images[2].height"></td>
-        <td class="bg-black text-light align-middle">{{track.album.name}}</td>
-        <td class="bg-black text-light align-middle">{{track.name}}</td>
+        <td class="align-items-end justify-content-end bg-black text-light align-middle"> <img [src]="track_.album.images[2].url" [alt]="" [width]="track_.album.images[2].width" [height]="track_.album.images[2].height"></td>
+        <td class="bg-black text-light align-middle">{{track_.album.name}}</td>
+        <td class="bg-black text-light align-middle">{{track_.name}}</td>
         <td class="bg-black text-light align-middle pt-4">
           <div class="d-flex align-items-center">
-            <iframe style="border-radius:12px" [src]="embedURL(track.id)" width="100%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe style="border-radius:12px" [src]="embedURL(track_.id)" width="100%" height="100" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
         </td>
       </tr>

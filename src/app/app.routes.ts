@@ -7,7 +7,6 @@ export const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'search', component: SeachPageComponent },
   { path: 'home', component: HomePageComponent },
-  { path: 'artist', component: ArtistDetailsPageComponent },
-
+  { path: 'artist/:type/:id', component: ArtistDetailsPageComponent },
   { path: '**', redirectTo: 'home' }
 ];

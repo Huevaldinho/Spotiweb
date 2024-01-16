@@ -21,7 +21,7 @@ export class MusicTableComponent {
     console.log("este es el nombre del album", str);
   }
 
-  embedURL(id: string): SafeResourceUrl{
+  public embedURL(id: string): SafeResourceUrl{
     return this.spotifyService.embedURL(id)
   }
 }
