@@ -20,12 +20,12 @@ export class ArtistDetailsPageComponent {
   public artist!: Artist;
   //public tracksList!: TracksItem[];
 
-  constructor(private spotifyService: SpotifyService, private route:ActivatedRoute){
-  }
+  constructor(
+      private spotifyService: SpotifyService,
+      private route:ActivatedRoute
+  ){}
 
   ngOnInit(){
-    this.spotifyService.getAccessToken_();
-
     this.route.params.subscribe(params => {
       const type = params['type'];
       if (type==='album'){
@@ -33,15 +33,10 @@ export class ArtistDetailsPageComponent {
         this.albumInfo( params['id']);
       }else{
         this.typeList = true;
-        //this.artistInfo(params['id']);
+        this.artistInfo(params['id']);
       }
-      console.log(this.typeList, params['id'],params['type']);0
-
     });
-
   }
-
-
 
   public normalizedData():TracksItem[]{
     let tracksList:TracksItem[] = [];

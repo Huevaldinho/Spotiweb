@@ -1,10 +1,9 @@
 import { Component,  Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'shared-spoty-card',
   standalone: true,
-  imports: [RouterModule],
+  imports: [],
   templateUrl: './spoty-card.component.html',
   styles: ``
 })
@@ -17,12 +16,14 @@ export class SpotyCardComponent {
   @Input() public id_: string='';
 
 
-  constructor() {
+  constructor(private router:Router) {
   }
 
 
   goToArtist():void{
-    console.log("Id y type en card: ", this.id_, this.type_,this.cardTitle);
+    //TODO: Navigate
+    this.router.navigate(['/artist',this.type_,this.id_]);
+
   }
 
 

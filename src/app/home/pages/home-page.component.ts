@@ -14,16 +14,26 @@ import { Subscription ,interval} from 'rxjs';
 export class HomePageComponent {
 
   public newAlbumReleases : AlbumElement[] = [];
-  private subscription: Subscription;
+  //private subscription: Subscription;
 
   constructor(private spotifyService: SpotifyService) {
-    //Inicializa el timer para llamar a Spotify cada 5 segundos
-    this.subscription = interval(30000).subscribe(() => {
-      this.callSpotify();
+    // //Inicializa el timer para llamar a Spotify cada 5 segundos
+    // this.subscription = interval(30000).subscribe(() => {
+    //   this.callSpotify();
+    // });
+  }
+
+
+  ngOnInit(): void {
+    this.spotifyService.searchNewAlbumReleases().subscribe((response)  => {
+      if (response!==null) {
+        this.newAlbumReleases = response;
+      }
     });
   }
 
-  ngOnDestroy() { this.subscription.unsubscribe(); }
+
+  //ngOnDestroy() { this.subscription.unsubscribe(); }
 
   callSpotify(): void {
     this.spotifyService.getAccessToken()
@@ -33,19 +43,9 @@ export class HomePageComponent {
         this.spotifyService.searchNewAlbumReleases().subscribe((response) => {
           if (response !== null) {
             this.newAlbumReleases = response;
-            console.log(response);
           }
         });
       });
-  }
-
-  ngOnInit(): void {
-    this.spotifyService.searchNewAlbumReleases().subscribe((response)  => {
-      if (response!==null) {
-        this.newAlbumReleases = response;
-        console.log(response);
-      }
-    });
   }
 
   trackArtists(artists:Artist[]) : string [] {
@@ -54,6 +54,4 @@ export class HomePageComponent {
     }
     return [];
   }
-
-
 }

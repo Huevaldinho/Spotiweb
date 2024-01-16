@@ -101,7 +101,7 @@ export class SpotifyService {
   artistInfo(id: string) : Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA68xatW_yXjVBJXerLLN6uG18SkIFeUNRE9euiGdAvWMzIqAGvWFQ1pZt4CiuZJMv_NidEdxkFNoW7gTOdHbfU0Hc7v6VS4fWrmdnhAUy6RTR1VC8`,
+      'Authorization': `Bearer BQB5zN9rz6f2I5qzcXu1kNhMJ-QVanOCGxnW3daFSuQmAAMJuI5YkyFmN5DKOAgRLWYt5SejkEvDUwY52pgPN9Q8_C2aDoUwlMv0TRQNCteFBG1-g-w`,
       // Add any other headers if needed
     });
     return this.httpClient.get<Artist>(url, { headers }).pipe(
@@ -114,7 +114,7 @@ export class SpotifyService {
   albumInfo(id: string): Observable<AlbumElement> {
     const url = `${this.apiUrl}/albums/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA68xatW_yXjVBJXerLLN6uG18SkIFeUNRE9euiGdAvWMzIqAGvWFQ1pZt4CiuZJMv_NidEdxkFNoW7gTOdHbfU0Hc7v6VS4fWrmdnhAUy6RTR1VC8`,
+      'Authorization': `Bearer BQAeXLdQ6cu_I1ojf8n-kRt6lMoY1MXk-UII5_xQnN-7Sda9qynzhKtgyvR2oFw_l7ksHsZhImMVEgaWNLacu2gdtqojgmf3_NP5ITFG2nZeIeX-ThM`,
       // Agrega cualquier otro encabezado si es necesario
     });
     return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
