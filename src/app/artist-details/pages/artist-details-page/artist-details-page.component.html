@@ -6,18 +6,18 @@
       </div>
       <div class="d-flex col mt-5 justify-content-between">
         <div>
-          <h1 class="text-light">{{this.album.artists[0].name}}</h1>
+          <h1 class="text-light">{{this.artist.name}}</h1>
           <a [href]="artist.external_urls.spotify" class="text-success fs-5">Ir a la página del artista</a>
         </div>
         <div class="mx-5">
-          <button type="button" class="btn btn-success px-4 py-2">Regresar</button>
+          <button type="button" (click)="normalizedData()" class="btn btn-success px-4 py-2">Regresar</button>
         </div>
       </div>
     </div>
-    <hr class="border border-light border-1 opacity-75 mx-4">
+    <hr class="border border-light border-1 opacity-50 mx-3">
 
-    <div class="d-flex row m-2">
-      <shared-music-table [album]='album'></shared-music-table>
+    <div class="d-flex row mx-2">
+      <shared-music-table [tracks]='normalizedData()'></shared-music-table>
     </div>
 
 
