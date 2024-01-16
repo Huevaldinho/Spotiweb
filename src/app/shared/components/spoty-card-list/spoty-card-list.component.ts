@@ -10,8 +10,8 @@ import { TracksItem, AlbumElement, Artist } from '../../interfaces/spotify.inter
   styles: ``
 })
 export class SpotyCardListComponent {
-  @Input() showAlbums!:boolean;
-  @Input() showTracks!:boolean;
+  @Input() showAlbums:boolean=true;
+  @Input() showTracks:boolean=false;
   @Input() albums: AlbumElement[] = [];
   @Input() tracks : TracksItem[] = [];
 

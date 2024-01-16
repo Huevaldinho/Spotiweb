@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { SpotifyService } from '../../../shared/services/spotify.service';
 import { AlbumElement, Artist, TracksItem, Tracks} from '../../../shared/interfaces/spotify.interfaces';
 import { MusicTableComponent } from "../../../shared/components/music-table/music-table.component";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'artist-details-page',
@@ -12,24 +13,28 @@ import { MusicTableComponent } from "../../../shared/components/music-table/musi
 })
 export class ArtistDetailsPageComponent {
 
-  @Input()
-  private idArtista: string = '4oLeXFyACqeem2VImYeBFe';
-  private idAlbum: string = '7tWP3OG5dWphctKg4NMACt';
-  private typeList: boolean = true; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
-
-
+  private typeList: boolean = false; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
   public album!: AlbumElement;
   public artist!: Artist;
   public topSongs!: TracksItem[];
   //public tracksList!: TracksItem[];
 
-  constructor(private spotifyService: SpotifyService){}
+  constructor(
+      private spotifyService: SpotifyService,
+      private route:ActivatedRoute
+  ){}
 
   ngOnInit(){
-    this.spotifyService.getAccessToken_();
-    this.artistInfo(this.idArtista);
-    this.topSongInfo(this.idArtista)
-    this.albumInfo(this.idAlbum);
+    this.route.params.subscribe(params => {
+      const type = params['type'];
+      if (type==='album'){
+        this.typeList = false;
+        this.albumInfo( params['id']);
+      }else{
+        this.typeList = true;
+        this.artistInfo(params['id']);
+      }
+    });
   }
 
   public normalizedData():TracksItem[]{
@@ -69,13 +74,11 @@ export class ArtistDetailsPageComponent {
       for (const track of tracks) {
         track.album = trackAlbum;
         tracksList.push(track);
-        //console.log("iteracion", tracksList)
       }
     } else {
       // aqui el otro lado
       return this.topSongs
     }
-    //console.log("lo que ocupo", tracksList)
     return tracksList
   }
 
@@ -87,7 +90,6 @@ export class ArtistDetailsPageComponent {
   }
 
   artistInfo(id: string):void{
-    console.log("search method in search-page.component.ts")
     this.spotifyService.artistInfo(id).subscribe(
       (response) => {this.artist = response, console.log("artist", this.artist)},
       (error) => console.error(error)
@@ -95,9 +97,8 @@ export class ArtistDetailsPageComponent {
   }
 
   albumInfo(id: string): void {
-    console.log("sssss")
     this.spotifyService.albumInfo(id).subscribe(
-      (response) => {this.album = response, console.log("album", this.album)},
+      (response) => {this.album = response},
       (error) => console.error(error)
     );
   }
