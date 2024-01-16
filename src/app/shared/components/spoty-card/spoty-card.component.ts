@@ -14,6 +14,7 @@ export class SpotyCardComponent {
   @Input() public image: string = '';
   @Input() public type_: string='';
   @Input() public id_: string='';
+  @Input() public artistId: string='';
 
 
   constructor(private router:Router) {
@@ -22,6 +23,8 @@ export class SpotyCardComponent {
 
   goToArtist():void{
     //TODO: Navigate
+    localStorage.removeItem('idArtista');
+    localStorage.setItem('idArtista', this.artistId);
     this.router.navigate(['/artist',this.type_,this.id_]);
 
   }

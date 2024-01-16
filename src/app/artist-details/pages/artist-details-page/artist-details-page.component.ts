@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SpotifyService } from '../../../shared/services/spotify.service';
 import { AlbumElement, Artist, TracksItem, Tracks} from '../../../shared/interfaces/spotify.interfaces';
 import { MusicTableComponent } from "../../../shared/components/music-table/music-table.component";
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'artist-details-page',
@@ -12,24 +12,28 @@ import { ActivatedRoute } from '@angular/router';
     imports: [MusicTableComponent]
 })
 export class ArtistDetailsPageComponent {
+  [x: string]: any;
 
   private typeList: boolean = false; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
   public album!: AlbumElement;
   public artist!: Artist;
   public topSongs!: TracksItem[];
+  private idArtist: string | null = localStorage.getItem('idArtista')
   //public tracksList!: TracksItem[];
 
   constructor(
       private spotifyService: SpotifyService,
-      private route:ActivatedRoute
+      private route:ActivatedRoute,
+      private router: Router
   ){}
 
   ngOnInit(){
     this.route.params.subscribe(params => {
       const type = params['type'];
-      if (type==='album'){
+      if (type==='album' || type==='single'){ // Albums or singles
         this.typeList = false;
         this.albumInfo( params['id']);
+        this.idArtist !== null ? this.artistInfo(this.idArtist) : console.error('No hay ID de artista almacenado en localStorage.');
       }else{
         this.typeList = true;
         this.artistInfo(params['id']);
@@ -77,9 +81,16 @@ export class ArtistDetailsPageComponent {
       }
     } else {
       // aqui el otro lado
+      this.idArtist !== null ? this.artistInfo(this.idArtist) : console.error('No hay ID de artista almacenado en localStorage.');
       return this.topSongs
     }
     return tracksList
+  }
+
+  backToSearch(): void{
+    localStorage.removeItem('idArtista');
+    this.router.navigate(['/search']);
+
   }
 
   topSongInfo(id: string):void{
