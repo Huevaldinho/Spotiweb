@@ -23,10 +23,7 @@ export class SpotyCardComponent {
 
   goToArtist():void{
     //TODO: Navigate
-    localStorage.removeItem('idArtista');
-    localStorage.setItem('idArtista', this.artistId);
-    this.router.navigate(['/artist',this.type_,this.id_]);
-
+    this.router.navigate(['/artist',this.type_,this.id_, this.artistId]);
   }
 
 

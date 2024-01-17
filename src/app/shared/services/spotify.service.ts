@@ -99,7 +99,7 @@ export class SpotifyService {
   artistInfo(id: string) : Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQCeF_oSjSSt53dEBprS7SopuK9jCrx6ifnMPwi6vIMGlouR1Bj4f2M7Q1nY07fI7sUtu19nns3Ja8LX0DmQ-dAfbFzQ0BiQDZfQ9EvHLHpyvTvNCT4`,
+      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,
       // Add any other headers if needed
     });
     return this.httpClient.get<Artist>(url, { headers }).pipe(
@@ -112,7 +112,7 @@ export class SpotifyService {
   albumInfo(id: string): Observable<AlbumElement> {
     const url = `${this.apiUrl}/albums/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQCeF_oSjSSt53dEBprS7SopuK9jCrx6ifnMPwi6vIMGlouR1Bj4f2M7Q1nY07fI7sUtu19nns3Ja8LX0DmQ-dAfbFzQ0BiQDZfQ9EvHLHpyvTvNCT4`,
+      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,
       // Agrega cualquier otro encabezado si es necesario
     });
     return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
@@ -123,10 +123,9 @@ export class SpotifyService {
 
    // to obtain all the top artist song in a specific market
    topSongsInfo(id: string): Observable<TracksItem[]> {
-    //const url = `${this.apiUrl}/artist/${id}/top-tracks?market=ES`;
-    const url = 'https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg/top-tracks?market=ES'
+    const url = `${this.apiUrl}/artists/${id}/top-tracks?market=ES`;
     const headers = new HttpHeaders({
-      'Authorization': `BearerBQCeF_oSjSSt53dEBprS7SopuK9jCrx6ifnMPwi6vIMGlouR1Bj4f2M7Q1nY07fI7sUtu19nns3Ja8LX0DmQ-dAfbFzQ0BiQDZfQ9EvHLHpyvTvNCT4`,  // Reemplaza esto con tu token de Spotify
+      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,  // Reemplaza esto con tu token de Spotify
       // Agrega cualquier otro encabezado si es necesario
     });
 
