@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { SpotifyService } from '../../services/spotify.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { RouterModule,ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'shared-spoty-card',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './spoty-card.component.html',
   styles: ``
 })
@@ -30,20 +31,26 @@ export class SpotyCardComponent {
     private router: Router,
     private storageService: StorageService,
     private spotifyService: SpotifyService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
   }
   goToArtist(artistName: string): void {
-    // this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
-    // this.searchedTerms.unshift(artistName);//para meter el termino al principio del array
-    // this.storageService.setItem('searchedQueries', this.searchedTerms);
+    //Guarde la ruta a la que tiene que regresar
+    if (this.activeRoute.snapshot.url.length===0){
+      this.storageService.setItem('route',[])
+    }else{
+      this.storageService.setItem('route',[this.activeRoute.snapshot.url[0].path])
+    }
+    console.log(this.storageService.getItem('route'))
 
     this.router.navigate(['/artist', 'track', this.id_,this.artistId]);
   }
   goToAlbum(): void {
+    if (this.type_ === 'track') return;
     //this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
     //this.searchedTerms.unshift(this.cardTitle);//para meter el termino al principio del array
     //this.storageService.setItem('searchedQueries', this.searchedTerms);

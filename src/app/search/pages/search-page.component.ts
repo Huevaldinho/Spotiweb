@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SpotifyService } from '../../shared/services/spotify.service';
 import { AlbumElement, TracksItem } from '../../shared/interfaces/spotify.interfaces';
@@ -27,53 +27,89 @@ export class SeachPageComponent {
     private storageService: StorageService,
   ) { }
 
-  ngOnInit(): void {//* Para que se cargue el historial
+  ngOnInit(): void {
     this.spotifyService.getAccessToken_();
     this.searchedTerms = this.storageService.getItem('searchedQueries');
+    const lastTerm = this.storageService.getTerm();
+    if (lastTerm.length > 0) {
+      this.updateTerm(lastTerm[0]);
+      this.search(this.term);
+    }
   }
 
+  updateTerm(newTerm: string): void {
+    this.term = newTerm;
+    this.storageService.setItem('term', [this.term]);
+  }
+  search(term: string): void {
+    if (this.showAlbums) {
+      this.searchAlbums(term);
+    } else {
+      this.searchTracks(term);
+    }
+  }
   searchAlbums(term: string): void {
-    this.term = term;
-    this.searchedTerms.unshift(term);//para meter el termino al principio del array
+    this.updateTerm(term);
+    if (this.searchedTerms.includes(term)) {
+      this.searchedTerms.splice(this.searchedTerms.indexOf(term), 1);//para borrar el termino del array
+      this.searchedTerms.unshift(term);//para meter el termino al principio del array
+    } else {
+      this.searchedTerms.unshift(term);//para meter el termino al principio del array
+    }
     this.storageService.setItem('searchedQueries', this.searchedTerms);
+
+
     this.spotifyService.searchAlbums(term).subscribe(
       (response) => {
         if (response) {
           this.albums = response;
           this.showAlbums = true;
-          console.log(this.storageService.getItem('searchedQueries'));
+          this.showTracks = false;
         }
       },
       (error) => console.error(error)
     );
   }
-
-  searchTracks(): void {
-    this.spotifyService.searchTracks(this.term).subscribe(
+  searchTracks(term: string): void {
+    this.updateTerm(term);
+    if (this.searchedTerms.includes(term)) {
+      this.searchedTerms.splice(this.searchedTerms.indexOf(term), 1);//para borrar el termino del array
+      this.searchedTerms.unshift(term);//para meter el termino al principio del array
+    } else {
+      this.searchedTerms.unshift(term);//para meter el termino al principio del array
+    }
+    this.spotifyService.searchTracks(term).subscribe(
       (response) => {
         if (response !== null) {
           this.tracks = response;
           this.showTracks = true;
+          this.showAlbums = false;
         }
       },
       (error) => console.error(error)
     );
   }
   filterByAlbum() {
-    this.showAlbums = true;
-    this.showTracks = false;
-    this.searchAlbums(this.term);
+    if (!this.term) return;//*Si no hay term, no haga nada
+    this.showAlbums = true;//*Muestre album
+    this.showTracks = false;//*Oculte tracks
+    this.tracks = [];//*Borre tracks
+    this.searchAlbums(this.term);//*Busque el term
   }
   filterByTrack() {
-    this.showAlbums = false;
-    this.showTracks = true;
-    this.searchTracks();
+    if (!this.term) return;//*Si no hay term, no haga nada
+    this.showAlbums = false;//*Oculte album
+    this.showTracks = true;//*Muestre tracks
+    this.albums = [];//*Borre albums
+    this.searchTracks(this.term);//*Busque el term
   }
 
   reSearchTerm(term: string): void {
     this.term = term;
-    this.searchAlbums(term);
-    this.showAlbums = true;
-    console.log("Termino rebuscado: ", term)
+    if (this.showAlbums) {
+      this.filterByAlbum();
+    } else {
+      this.filterByTrack();
+    }
   }
 }
