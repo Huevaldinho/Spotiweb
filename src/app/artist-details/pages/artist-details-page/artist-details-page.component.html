@@ -1,4 +1,4 @@
-@if(this.artist && this.album){
+@if((this.typeInfo === 'album' && this.artist && this.album) || (this.typeInfo === 'track' && this.artist)){
   <div class="bg-black mx-2">
     <div class="row">
       <div class="d-flex col-3 m-2 justify-content-center align-items-center">
@@ -19,7 +19,6 @@
     <div class="d-flex row mx-2">
       <shared-music-table [tracks]='normalizedData()'></shared-music-table>
     </div>
-
 
   </div>
 }

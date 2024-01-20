@@ -1,6 +1,6 @@
+import { Component,  ElementRef,  Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
-import { Component, Input } from '@angular/core';
 import { SpotifyService } from '../../services/spotify.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
@@ -20,6 +20,9 @@ export class SpotyCardComponent {
   @Input() public artistId: string = '';
   public searchedTerms: string[] = [];
   @Input() public audioUrl = ''; //TODO: corregir audio de album y tracks
+  @Input() public trackPreview: string=''; //? **
+
+  @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
 
   constructor(
     private router: Router,
@@ -43,6 +46,22 @@ export class SpotyCardComponent {
     this.storageService.setItem('searchedQueries', this.searchedTerms);
     this.router.navigate(['/artist', this.type_, this.id_, this.artistId]);
   }
+  isPlaying: boolean = false;
+  isHovered: boolean = false;
+
+
+  playSound(): void {
+    const audio = document.getElementById('myAudio') as HTMLAudioElement;
+    console.log("track to play",this.trackPreview)
+    if (audio) {
+      this.isPlaying = true; // Desactiva el botón mientras se reproduce el sonido
+      audio.play();
+      audio.onended = () => {
+        this.isPlaying = false; // Habilita el botón cuando termina la reproducción
+      };
+    }
+  }
+
   get titleFixed(): string {
     return this.cardTitle.length > 20 ? this.cardTitle.substr(0, 20) + '...' : this.cardTitle;
   }
@@ -50,4 +69,17 @@ export class SpotyCardComponent {
   get audioSource(): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
   }
+
+  playSong() {
+    throw new Error('Method not implemented.');
+  }
+
+  onHover(): void {
+    this.isHovered = true;
+  }
+
+  onLeave(): void {
+    this.isHovered = false;
+  }
+
 }

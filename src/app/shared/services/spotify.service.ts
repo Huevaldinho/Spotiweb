@@ -29,10 +29,6 @@ export class SpotifyService {
   };
 
   getAccessToken_(): string {
-    // if (this.token) {
-    //   console.log("Token already exists:", this.token);
-    //   return this.token;
-    // }
     const url = this.tokenUrl;
     this.httpClient.post<SpotiToken>(url, this.body, this.options)
       .pipe(
@@ -106,7 +102,7 @@ export class SpotifyService {
   artistInfo(id: string) : Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQC9GdNZ3BIW8s_is5l-cgImOZTaYlbaNN615dSmTLBT5AMLSWZH1361mSGVLi7h_eZDa5LKBroxW5PnZVXVEcI_722RoZF9qLSmoJ2CXmwXWu6JOCw`,
+      'Authorization': `Bearer ${this.getAccessToken_()}`,
       // Add any other headers if needed
     });
     return this.httpClient.get<Artist>(url, { headers }).pipe(
@@ -119,7 +115,7 @@ export class SpotifyService {
   albumInfo(id: string): Observable<AlbumElement> {
     const url = `${this.apiUrl}/albums/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQC9GdNZ3BIW8s_is5l-cgImOZTaYlbaNN615dSmTLBT5AMLSWZH1361mSGVLi7h_eZDa5LKBroxW5PnZVXVEcI_722RoZF9qLSmoJ2CXmwXWu6JOCw`,
+      'Authorization': `Bearer ${this.getAccessToken_()}`,
       // Agrega cualquier otro encabezado si es necesario
     });
     return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
@@ -132,7 +128,7 @@ export class SpotifyService {
    topSongsInfo(id: string): Observable<TracksItem[]> {
     const url = `${this.apiUrl}/artists/${id}/top-tracks?market=ES`;
     const headers = new HttpHeaders({
-        'Authorization': `Bearer BQC9GdNZ3BIW8s_is5l-cgImOZTaYlbaNN615dSmTLBT5AMLSWZH1361mSGVLi7h_eZDa5LKBroxW5PnZVXVEcI_722RoZF9qLSmoJ2CXmwXWu6JOCw`,
+      'Authorization': `Bearer ${this.getAccessToken_()}`,  // Reemplaza esto con tu token de Spotify
       // Agrega cualquier otro encabezado si es necesario
     });
 

@@ -13,12 +13,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ArtistDetailsPageComponent {
 
-
-  public typeList: boolean = false; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
   private normalized: boolean = false;
   public album!: AlbumElement;
   public artist!: Artist;
   public songsList: TracksItem[] =[];
+  public typeInfo!: string;
   public artistId!: string;
 
   constructor(
@@ -30,14 +29,13 @@ export class ArtistDetailsPageComponent {
   //todo revisar esta vara
   ngOnInit(){
     this.route.params.subscribe(params => {
-      const type = params['type'];
+      this.typeInfo = params['type'];
       this.artistId = params['artistId']
-      if (type==='album' || type==='single' || type==='compilation'){ // Albums or singles or compilation
-        this.typeList = false;
+      if (this.typeInfo==='album'){ // Albums or singles or compilation
         this.albumInfo( params['id']);
         this.artistInfo( params['artistId'])
       }else{
-        this.typeList = true;
+        this.normalized = true;
         this.artistInfo(this.artistId);
         this.topSongInfo(this.artistId);
       }
