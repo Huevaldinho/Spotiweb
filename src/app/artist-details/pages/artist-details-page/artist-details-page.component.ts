@@ -12,14 +12,14 @@ import { Router, ActivatedRoute } from '@angular/router';
     imports: [MusicTableComponent]
 })
 export class ArtistDetailsPageComponent {
-  [x: string]: any;
 
-  private typeList: boolean = false; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
+
+  public typeList: boolean = false; //* Boolean porque seran 2 tipos: Album y Top Canciones (false = Album <> true = Top)
+  private normalized: boolean = false;
   public album!: AlbumElement;
   public artist!: Artist;
-  public topSongs!: TracksItem[];
-  private idArtist: string | null = localStorage.getItem('idArtista')
-  //public tracksList!: TracksItem[];
+  public songsList: TracksItem[] =[];
+  public artistId!: string;
 
   constructor(
       private spotifyService: SpotifyService,
@@ -27,24 +27,28 @@ export class ArtistDetailsPageComponent {
       private router: Router
   ){}
 
+  //todo revisar esta vara
   ngOnInit(){
     this.route.params.subscribe(params => {
       const type = params['type'];
-      if (type==='album' || type==='single'){ // Albums or singles
+      this.artistId = params['artistId']
+      if (type==='album' || type==='single' || type==='compilation'){ // Albums or singles or compilation
         this.typeList = false;
         this.albumInfo( params['id']);
-        this.idArtist !== null ? this.artistInfo(this.idArtist) : console.error('No hay ID de artista almacenado en localStorage.');
+        this.artistInfo( params['artistId'])
       }else{
         this.typeList = true;
-        this.artistInfo(params['id']);
+        this.artistInfo(this.artistId);
+        this.topSongInfo(this.artistId);
       }
     });
   }
 
+  //todo se repite varias veces
   public normalizedData():TracksItem[]{
-    let tracksList:TracksItem[] = [];
 
-    if (!this.typeList) {
+    if (!this.normalized) {
+
       let emptyTracks: Tracks = {
         href: '',
         items: [],
@@ -74,33 +78,32 @@ export class ArtistDetailsPageComponent {
 
       // Hacer copia profunda del array original
       let tracks = JSON.parse(JSON.stringify(this.album.tracks.items));
-
       for (const track of tracks) {
         track.album = trackAlbum;
-        tracksList.push(track);
+        this.songsList.push(track);
       }
-    } else {
-      // aqui el otro lado
-      this.idArtist !== null ? this.artistInfo(this.idArtist) : console.error('No hay ID de artista almacenado en localStorage.');
-      return this.topSongs
     }
-    return tracksList
+    console.log("repeticiones")
+    this.normalized = true;
+    return this.songsList;
   }
 
   backToSearch(): void{
     localStorage.removeItem('idArtista');
+    localStorage.setItem('returnFlag', JSON.stringify(true)) //todo recordar quitar esta parte si se va a trabajar diferente el set y el get del LocalStorage
     this.router.navigate(['/search']);
 
   }
 
   topSongInfo(id: string):void{
     this.spotifyService.topSongsInfo(id).subscribe(
-      (response) => {this.topSongs = response, console.log(this.topSongs)},
+      (response) => {this.songsList = response, console.log(this.songsList)},
       (error) => console.error(error)
     );
   }
 
   artistInfo(id: string):void{
+    console.log("de donde estoy entrando?")
     this.spotifyService.artistInfo(id).subscribe(
       (response) => {this.artist = response, console.log("artist", this.artist)},
       (error) => console.error(error)
@@ -109,7 +112,7 @@ export class ArtistDetailsPageComponent {
 
   albumInfo(id: string): void {
     this.spotifyService.albumInfo(id).subscribe(
-      (response) => {this.album = response},
+      (response) => {this.album = response, console.log("album", this.album)},
       (error) => console.error(error)
     );
   }
