@@ -48,10 +48,12 @@
     <!--History-->
     <div class="col-fixed" style="width: 300px">
       <div class="text-center p-3 border-round-sm font-bold">
-        <search-history
+        @if(this.searchedTerms.length > 0){
+          <search-history
           [searchedTerms]="this.searchedTerms"
           (onValue)="reSearchTerm($event)"
         ></search-history>
+        }
       </div>
     </div>
     <div class="col">

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of,throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { AlbumElement, AlbumSearchResponse, AlbumTypeEnum, Artist, SpotiToken, TrackSearchResponse, TracksItem } from '../interfaces/spotify.interfaces';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -36,7 +36,6 @@ export class SpotifyService {
         catchError(() => of(''))
       )
       .subscribe(token => { this.token = token; });
-    console.log("Generated token: ", this.token);
     return this.token;
   }
 
@@ -54,7 +53,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
     });
-    return this.httpClient.get<AlbumSearchResponse|null>(url, { headers }).
+    return this.httpClient.get<AlbumSearchResponse | null>(url, { headers }).
       pipe(
         map((response) => {
           if (!response) return null;
@@ -71,9 +70,9 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
     });
-    return this.httpClient.get<TrackSearchResponse|null>(url, { headers })
+    return this.httpClient.get<TrackSearchResponse | null>(url, { headers })
       .pipe(
-        map((response) => response?.tracks.items||null),
+        map((response) => response?.tracks.items || null),
         catchError(() => of(null))
       );
   }
@@ -83,7 +82,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
     });
-    return this.httpClient.get<AlbumSearchResponse|null>(url, { headers })
+    return this.httpClient.get<AlbumSearchResponse | null>(url, { headers })
       .pipe(
         map((response) => {
           if (!response) return null;
@@ -93,13 +92,13 @@ export class SpotifyService {
       );
   }
 
-  oembeded():void{
+  oembeded(): void {
     //https://open.spotify.com/embed/album/2ODvWsOgouMbaA5xf0RkJe?utm_source=oembed
-  //<div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe [src]="" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe></div>
+    //<div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe [src]="" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe></div>
 
   }
 
-  artistInfo(id: string) : Observable<Artist> {
+  artistInfo(id: string): Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
@@ -124,15 +123,15 @@ export class SpotifyService {
     );
   }
 
-   // to obtain all the top artist song in a specific market
-   topSongsInfo(id: string): Observable<TracksItem[]> {
+  // to obtain all the top artist song in a specific market
+  topSongsInfo(id: string): Observable<TracksItem[]> {
     const url = `${this.apiUrl}/artists/${id}/top-tracks?market=ES`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,  // Reemplaza esto con tu token de Spotify
       // Agrega cualquier otro encabezado si es necesario
     });
 
-    return this.httpClient.get<{tracks:TracksItem[]}>(url, { headers }).pipe(
+    return this.httpClient.get<{ tracks: TracksItem[] }>(url, { headers }).pipe(
       map(response => response.tracks),
       catchError(() => of([]))
     );
@@ -140,7 +139,7 @@ export class SpotifyService {
 
   //*For tracks ONLY
   //id del cancion
-  embedURL(id: string):SafeResourceUrl{
+  embedURL(id: string): SafeResourceUrl {
     const url = `https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
