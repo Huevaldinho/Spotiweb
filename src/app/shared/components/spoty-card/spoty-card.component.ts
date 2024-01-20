@@ -1,5 +1,6 @@
 import { Component,  Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 @Component({
   selector: 'shared-spoty-card',
   standalone: true,
@@ -15,15 +16,25 @@ export class SpotyCardComponent {
   @Input() public type_: string='';
   @Input() public id_: string='';
   @Input() public artistId: string='';
+  public searchedTerms: string[]=[];
 
 
-  constructor(private router:Router) {
+    constructor(private router:Router,private storageService: StorageService) {
   }
 
 
-  goToArtist():void{
-    //TODO: Navigate
-    this.router.navigate(['/artist',this.type_,this.id_, this.artistId]);
+  goToArtist(artistName:string):void{
+    this.searchedTerms = this.storageService.getItem('searchedQueries')as string[];
+    this.searchedTerms.unshift(artistName);//para meter el termino al principio del array
+    this.storageService.setItem('searchedQueries', this.searchedTerms);
+    this.router.navigate(['/artist',this.type_,this.id_]);
+  }
+
+  goToAlbum():void{
+    this.searchedTerms = this.storageService.getItem('searchedQueries')as string[];
+    this.searchedTerms.unshift(this.cardTitle);//para meter el termino al principio del array
+    this.storageService.setItem('searchedQueries', this.searchedTerms);
+    this.router.navigate(['/artist',this.type_,this.id_]);
   }
 
 

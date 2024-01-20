@@ -99,7 +99,7 @@ export class SpotifyService {
   artistInfo(id: string) : Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,
+      'Authorization': `Bearer BQDgeMnin1eeZ1umbhLaCbWQOH3UAV5watlkyU9LKtIsGC9QSpW1rcU0_1rd5-p8Wj_VHh4Vw0rku56R0cHmDIDIQbLkx_xWxCT8-B60w-MEIJIlFSs`,
       // Add any other headers if needed
     });
     return this.httpClient.get<Artist>(url, { headers }).pipe(
@@ -112,7 +112,7 @@ export class SpotifyService {
   albumInfo(id: string): Observable<AlbumElement> {
     const url = `${this.apiUrl}/albums/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,
+      'Authorization': `Bearer BQDgeMnin1eeZ1umbhLaCbWQOH3UAV5watlkyU9LKtIsGC9QSpW1rcU0_1rd5-p8Wj_VHh4Vw0rku56R0cHmDIDIQbLkx_xWxCT8-B60w-MEIJIlFSs`,
       // Agrega cualquier otro encabezado si es necesario
     });
     return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
@@ -123,9 +123,10 @@ export class SpotifyService {
 
    // to obtain all the top artist song in a specific market
    topSongsInfo(id: string): Observable<TracksItem[]> {
-    const url = `${this.apiUrl}/artists/${id}/top-tracks?market=ES`;
+    //const url = `${this.apiUrl}/artist/${id}/top-tracks?market=ES`;
+    const url = 'https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg/top-tracks?market=ES'
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,  // Reemplaza esto con tu token de Spotify
+      'Authorization': `Bearer BQDgeMnin1eeZ1umbhLaCbWQOH3UAV5watlkyU9LKtIsGC9QSpW1rcU0_1rd5-p8Wj_VHh4Vw0rku56R0cHmDIDIQbLkx_xWxCT8-B60w-MEIJIlFSs`,  // Reemplaza esto con tu token de Spotify
       // Agrega cualquier otro encabezado si es necesario
     });
 
