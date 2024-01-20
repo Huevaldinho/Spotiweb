@@ -83,7 +83,8 @@ export class ArtistDetailsPageComponent {
   }
 
   backToSearch(): void {
-    console.log('Debe regresar a la ruta: ', this.storageService.getItem('route'));
+    //Si no hay ruta guardada, regresa a la página principal
+    //Si hay ruta guardada, regresa a la página anterior ('/search')
     this.storageService.getItem('route')?.length > 0 ? this.router.navigate(['/search']) : this.router.navigate(['/']);
   }
 
