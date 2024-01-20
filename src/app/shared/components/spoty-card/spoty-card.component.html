@@ -1,19 +1,17 @@
 <div class="card mb-2 text-center bg-white" >
   <img [src]="this.image" [alt]="this.cardTitle" class="card-img-top">
   <div class="card-body">
-    <h5 class="card-title"
+    <h5 class="card-title" (click)="goToAlbum()"
     >{{this.cardTitle }}</h5>
   </div>
   <div class="card-body">
     @for(artist of this.artitsList;track $index){
-
         <span
           class="badge text-bg-success mx-1 p-1"
-          (click)="goToArtist()"
+          (click)="goToArtist(artist)"
         >
         {{this.artist}}
         </span>
-
     }
   </div>
   <!--Player -->
