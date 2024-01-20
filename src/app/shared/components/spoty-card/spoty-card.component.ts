@@ -18,9 +18,11 @@ export class SpotyCardComponent {
   @Input() public type_: string = '';
   @Input() public id_: string = '';
   @Input() public artistId: string = '';
-  public searchedTerms: string[] = [];
   @Input() public audioUrl = ''; //TODO: corregir audio de album y tracks
-  @Input() public trackPreview: string=''; //? **
+  @Input() public trackPreview: string='';
+  public searchedTerms: string[] = [];
+  public isPlaying: boolean = false;
+  public isHovered: boolean = false;
 
   @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
 
@@ -35,19 +37,18 @@ export class SpotyCardComponent {
     this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
   }
   goToArtist(artistName: string): void {
-    this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
-    this.searchedTerms.unshift(artistName);//para meter el termino al principio del array
-    this.storageService.setItem('searchedQueries', this.searchedTerms);
-    this.router.navigate(['/artist', this.type_, this.id_]);
+    // this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
+    // this.searchedTerms.unshift(artistName);//para meter el termino al principio del array
+    // this.storageService.setItem('searchedQueries', this.searchedTerms);
+    this.router.navigate(['/artist', 'track', this.id_,this.artistId]);
   }
   goToAlbum(): void {
-    this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
-    this.searchedTerms.unshift(this.cardTitle);//para meter el termino al principio del array
-    this.storageService.setItem('searchedQueries', this.searchedTerms);
-    this.router.navigate(['/artist', this.type_, this.id_, this.artistId]);
+    //this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
+    //this.searchedTerms.unshift(this.cardTitle);//para meter el termino al principio del array
+    //this.storageService.setItem('searchedQueries', this.searchedTerms);
+    this.router.navigate(['/artist', 'album', this.id_, this.artistId]);
   }
-  isPlaying: boolean = false;
-  isHovered: boolean = false;
+
 
 
   playSound(): void {

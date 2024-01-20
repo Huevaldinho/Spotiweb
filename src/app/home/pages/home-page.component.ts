@@ -25,6 +25,8 @@ export class HomePageComponent {
 
 
   ngOnInit(): void {
+    this.spotifyService.getAccessToken_();
+
     this.spotifyService.searchNewAlbumReleases().subscribe((response)  => {
       if (response!==null) {
         this.newAlbumReleases = response;

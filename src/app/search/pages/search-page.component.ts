@@ -15,26 +15,20 @@ import { SearchHistoryComponent } from "../components/search-history/search-hist
 })
 export class SeachPageComponent {
 
-  public albums : AlbumElement[] = [];
-  public tracks : TracksItem[] = [];
+  public albums: AlbumElement[] = [];
+  public tracks: TracksItem[] = [];
   public showAlbums: boolean = true;
   public showTracks: boolean = true;
   public term: string = '';
   public searchedTerms: string[] = [];//Para mostrar los terminos buscados
 
-
-
-  @ViewChild('albumsBtn')
-  public albumsBtn!: ElementRef<HTMLButtonElement>;//Para que se inicialice "!:" sin tener que hacerlo en el constructor
-  @ViewChild('trackBtn')
-  public trackBtn!: ElementRef<HTMLButtonElement>;//Para que se inicialice "!:" sin tener que hacerlo en el constructor
-
   constructor(
     private spotifyService: SpotifyService,
     private storageService: StorageService,
-  ){ }
+  ) { }
 
-  ngOnInit(): void{//* Para que se cargue el historial
+  ngOnInit(): void {//* Para que se cargue el historial
+    this.spotifyService.getAccessToken_();
     this.searchedTerms = this.storageService.getItem('searchedQueries');
   }
 
@@ -44,10 +38,9 @@ export class SeachPageComponent {
     this.storageService.setItem('searchedQueries', this.searchedTerms);
     this.spotifyService.searchAlbums(term).subscribe(
       (response) => {
-        if (response){
+        if (response) {
           this.albums = response;
-          this.showAlbums=true;
-          this.albumsBtn.nativeElement.classList.add('active')
+          this.showAlbums = true;
           console.log(this.storageService.getItem('searchedQueries'));
         }
       },
@@ -55,12 +48,12 @@ export class SeachPageComponent {
     );
   }
 
-  searchTracks() : void{
+  searchTracks(): void {
     this.spotifyService.searchTracks(this.term).subscribe(
       (response) => {
-        if (response!==null){
-            this.tracks= response;
-            this.showTracks=true;
+        if (response !== null) {
+          this.tracks = response;
+          this.showTracks = true;
         }
       },
       (error) => console.error(error)
@@ -81,6 +74,6 @@ export class SeachPageComponent {
     this.term = term;
     this.searchAlbums(term);
     this.showAlbums = true;
-    console.log("Termino rebuscado: ",term)
+    console.log("Termino rebuscado: ", term)
   }
 }

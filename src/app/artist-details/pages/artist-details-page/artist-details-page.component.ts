@@ -26,7 +26,6 @@ export class ArtistDetailsPageComponent {
       private router: Router
   ){}
 
-  //todo revisar esta vara
   ngOnInit(){
     this.route.params.subscribe(params => {
       this.typeInfo = params['type'];
@@ -44,9 +43,7 @@ export class ArtistDetailsPageComponent {
 
   //todo se repite varias veces
   public normalizedData():TracksItem[]{
-
     if (!this.normalized) {
-
       let emptyTracks: Tracks = {
         href: '',
         items: [],
@@ -56,7 +53,6 @@ export class ArtistDetailsPageComponent {
         previous: null,
         total: 0,
       };
-
       let trackAlbum: AlbumElement = {
         album_type: this.album.album_type,
         artists: [],
@@ -73,7 +69,6 @@ export class ArtistDetailsPageComponent {
         type: this.album.type,
         uri: this.album.uri,
       };
-
       // Hacer copia profunda del array original
       let tracks = JSON.parse(JSON.stringify(this.album.tracks.items));
       for (const track of tracks) {
@@ -81,16 +76,12 @@ export class ArtistDetailsPageComponent {
         this.songsList.push(track);
       }
     }
-    console.log("repeticiones")
     this.normalized = true;
     return this.songsList;
   }
 
   backToSearch(): void{
-    localStorage.removeItem('idArtista');
-    localStorage.setItem('returnFlag', JSON.stringify(true)) //todo recordar quitar esta parte si se va a trabajar diferente el set y el get del LocalStorage
     this.router.navigate(['/search']);
-
   }
 
   topSongInfo(id: string):void{
@@ -101,16 +92,15 @@ export class ArtistDetailsPageComponent {
   }
 
   artistInfo(id: string):void{
-    console.log("de donde estoy entrando?")
     this.spotifyService.artistInfo(id).subscribe(
-      (response) => {this.artist = response, console.log("artist", this.artist)},
+      (response) => {this.artist = response},
       (error) => console.error(error)
     );
   }
 
   albumInfo(id: string): void {
     this.spotifyService.albumInfo(id).subscribe(
-      (response) => {this.album = response, console.log("album", this.album)},
+      (response) => {this.album = response},
       (error) => console.error(error)
     );
   }

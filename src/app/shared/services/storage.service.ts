@@ -13,7 +13,7 @@ export class StorageService {
     @returns The value stored under the key
   */
   setItem(key: string, value: string[]|[]): string[]|[] {
-    if (value.length === 10) {
+    if (value.length >= 10) {
       value.pop();//when the array is full, remove the last element
     }
     localStorage.setItem(key, JSON.stringify(value));
