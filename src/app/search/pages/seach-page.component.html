@@ -1,11 +1,12 @@
-<!--Search box-->
 <div class="bg-dark flex-fill p-3 rounded m-1" id="seachBoxContainer">
+  <!--Search box-->
   <shared-seach-box
     (onValue)="searchAlbums($event)"
     placeholder="Buscar cancion o artista"
   ></shared-seach-box>
 
-  <div class="btn-group p-1 m-1 " role="group" aria-label="Default button group">
+  <!--Filtros album-cancion -->
+  <!-- <div class="btn-group p-1 m-1 " role="group" aria-label="Default button group">
     <button type="button"
             class="btn btn-outline-success"
             (click)="this.filterByAlbum()"
@@ -20,7 +21,19 @@
     >
       Canciones
     </button>
+  </div> -->
+
+
+  <div class="btn-group my-2" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+    <label class="btn btn-outline-success" for="btnradio1" (click)="this.filterByAlbum()">Albums</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+    <label class="btn btn-outline-success" for="btnradio2" (click)="this.filterByTrack()">Canciones</label>
   </div>
+
+
+
 </div>
 
 <!--Search result-->

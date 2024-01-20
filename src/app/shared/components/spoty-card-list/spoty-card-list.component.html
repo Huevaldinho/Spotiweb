@@ -8,12 +8,12 @@
     @for(album of this.albums ; track $index){
     <div class="col-md-2 col-sm-4">
       <shared-spoty-card
-        [type_]="this.album.album_type"
+        [cardTitle]="this.album.name"
         [id_]="this.album.id"
         [artistId]="this.album.artists[0].id"
-        [cardTitle]="this.album.name"
         [image]="this.album.images[0].url"
         [artitsList]="this.getAlbumArtits(this.album)"
+        [type_]="this.album.album_type"
       >
         <!--Agregar id al album y recibirlo en la card-->
       </shared-spoty-card>
@@ -26,10 +26,10 @@
     <div class="col-md-2 col-sm-4">
       <shared-spoty-card
         [cardTitle]="track.name"
-        [image]="this.track.album.images[0].url"
-        [artitsList]="this.trackArtists(this.track.artists)"
         [id_]="track.id"
         [artistId]="this.track.artists[0].id"
+        [image]="this.track.album.images[0].url"
+        [artitsList]="this.trackArtists(this.track.artists)"
         [type_]="track.type"
       >
       </shared-spoty-card>

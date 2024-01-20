@@ -1,6 +1,8 @@
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { Component, Input } from '@angular/core';
+import { SpotifyService } from '../../services/spotify.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'shared-spoty-card',
   standalone: true,
@@ -10,16 +12,23 @@ import { Component, Input } from '@angular/core';
 })
 export class SpotyCardComponent {
 
-  @Input() public cardTitle : string='Nombre album o cancion';
+  @Input() public cardTitle : string = 'Nombre album o cancion';
   @Input() public artitsList: string[] = [];
   @Input() public image: string = '';
-  @Input() public type_: string='';
-  @Input() public id_: string='';
-  @Input() public artistId: string='';
-  public searchedTerms: string[]=[];
+  @Input() public type_: string = '';
+  @Input() public id_: string = '';
+  @Input() public artistId: string = '';
+  public searchedTerms: string[] = [];
 
 
-    constructor(private router:Router,private storageService: StorageService) {
+  constructor(
+              private router:Router,
+              private storageService: StorageService,
+              private spotifyService: SpotifyService
+              ){}
+
+  ngOnInit():void{
+    this.searchedTerms = this.storageService.getItem('searchedQueries')as string[];
   }
 
 
@@ -41,11 +50,11 @@ export class SpotyCardComponent {
     return this.cardTitle.length > 20 ? this.cardTitle.substr(0, 20) + '...' : this.cardTitle;
   }
 
-  getIframeSrc(): string {
-    //https://open.spotify.com/embed/album/2ODvWsOgouMbaA5xf0RkJe?utm_source=oembed
-    if (this.id_!='')
-      return `https://open.spotify.com/embed/album/${this.id_}?utm_source=oembed`;
-    return '';
+
+
+  //!TODO: obtener el id de la cancion a reproducir
+  public embedURL(id: string): SafeResourceUrl{
+    return this.spotifyService.embedURL(id)
   }
 
   playSong() {
