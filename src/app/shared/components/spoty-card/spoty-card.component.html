@@ -7,13 +7,22 @@
     <img [src]="this.image" [alt]="this.cardTitle" class="card-img-top" />
     @if (isHovered) {
     <div class="position-absolute top-50 start-50 translate-middle">
-      <button
-        (click)="playSound()"
-        [disabled]="isPlaying"
+      @if (trackPreview && trackPreview !== "") {
+        <button
+        (click)="toggleAudio()"
         class="btn btn-success p-4 rounded-circle btn-lg"
       >
         <i class="fas fa-play"></i>
       </button>
+      }@else{
+        <button
+        (click)="toggleAudio()"
+        disabled = "true"
+        class="btn btn-secondary p-4 rounded-circle btn-lg"
+      >
+        <i class="fas fa-play"></i>
+      </button>
+      }
     </div>
     }
   </div>

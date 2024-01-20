@@ -24,7 +24,7 @@ export class SpotyCardComponent {
   public isPlaying: boolean = false;
   public isHovered: boolean = false;
 
-  @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio') audio!: ElementRef<HTMLAudioElement>;
 
   constructor(
     private router: Router,
@@ -50,17 +50,16 @@ export class SpotyCardComponent {
     this.router.navigate(['/artist', 'album', this.id_, this.artistId]);
   }
 
-
-
-  playSound(): void {
-    const audio = document.getElementById('myAudio') as HTMLAudioElement;
+  toggleAudio() {
+    const audioElement = this.audio.nativeElement as HTMLAudioElement;
     console.log("track to play",this.trackPreview)
-    if (audio) {
-      this.isPlaying = true; // Desactiva el botón mientras se reproduce el sonido
-      audio.play();
-      audio.onended = () => {
-        this.isPlaying = false; // Habilita el botón cuando termina la reproducción
-      };
+    if(audioElement) {
+      if(this.isPlaying) {
+        audioElement.pause();
+      } else {
+        audioElement.play();
+      }
+      this.isPlaying = !this.isPlaying;
     }
   }
 
@@ -70,10 +69,6 @@ export class SpotyCardComponent {
 
   get audioSource(): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-  }
-
-  playSong() {
-    throw new Error('Method not implemented.');
   }
 
   onHover(): void {
