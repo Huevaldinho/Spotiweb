@@ -1,4 +1,4 @@
-import { Component,  Input } from '@angular/core';
+import { Component,  ElementRef,  Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 @Component({
   selector: 'shared-spoty-card',
@@ -15,11 +15,28 @@ export class SpotyCardComponent {
   @Input() public type_: string='';
   @Input() public id_: string='';
   @Input() public artistId: string='';
+  @Input() public trackPreview: string=''; //? **
+
+  @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
 
 
   constructor(private router:Router) {
   }
+  isPlaying: boolean = false;
+  isHovered: boolean = false;
 
+
+  playSound(): void {
+    const audio = document.getElementById('myAudio') as HTMLAudioElement;
+    console.log("track to play",this.trackPreview)
+    if (audio) {
+      this.isPlaying = true; // Desactiva el botón mientras se reproduce el sonido
+      audio.play();
+      audio.onended = () => {
+        this.isPlaying = false; // Habilita el botón cuando termina la reproducción
+      };
+    }
+  }
 
   goToArtist():void{
     //TODO: Navigate
@@ -40,6 +57,14 @@ export class SpotyCardComponent {
 
   playSong() {
     throw new Error('Method not implemented.');
+  }
+
+  onHover(): void {
+    this.isHovered = true;
+  }
+
+  onLeave(): void {
+    this.isHovered = false;
   }
 
 }

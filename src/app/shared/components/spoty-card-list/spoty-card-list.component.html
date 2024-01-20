@@ -8,7 +8,7 @@
     @for(album of this.albums ; track $index){
     <div class="col-md-2 col-sm-4">
       <shared-spoty-card
-        [type_]="this.album.album_type"
+        [type_]="'album'"
         [id_]="this.album.id"
         [artistId]="this.album.artists[0].id"
         [cardTitle]="this.album.name"
@@ -30,7 +30,8 @@
         [artitsList]="this.trackArtists(this.track.artists)"
         [id_]="track.id"
         [artistId]="this.track.artists[0].id"
-        [type_]="track.type"
+        [type_]="'track'"
+        [trackPreview] = 'track.preview_url'
       >
       </shared-spoty-card>
     </div>
