@@ -4,13 +4,14 @@ import { SpotifyService } from '../../shared/services/spotify.service';
 import { AlbumElement, TracksItem } from '../../shared/interfaces/spotify.interfaces';
 import { SpotyCardListComponent } from "../../shared/components/spoty-card-list/spoty-card-list.component";
 import { SeachBoxComponent } from "../../shared/components/seach-box/seach-box.component";
-import { StorageService }  from '../../shared/services/storage.service';
+import { StorageService } from '../../shared/services/storage.service';
+import { SearchHistoryComponent } from "../components/search-history/search-history.component";
 @Component({
-    selector: 'seach-page',
-    standalone: true,
-    templateUrl: './seach-page.component.html',
-    styles: ``,
-    imports: [ SpotyCardListComponent, SeachBoxComponent]
+  selector: 'seach-page',
+  standalone: true,
+  templateUrl: './seach-page.component.html',
+  styles: ``,
+  imports: [SpotyCardListComponent, SeachBoxComponent, SearchHistoryComponent]
 })
 export class SeachPageComponent {
 
@@ -18,7 +19,7 @@ export class SeachPageComponent {
   public tracks : TracksItem[] = [];
   public showAlbums: boolean = true;
   public showTracks: boolean = true;
-  private term : string = '';
+  public term: string = '';
   public searchedTerms: string[] = [];//Para mostrar los terminos buscados
 
 
@@ -53,16 +54,6 @@ export class SeachPageComponent {
       (error) => console.error(error)
     );
   }
-  filterByAlbum(){
-    if (this.albumsBtn.nativeElement.classList.contains('active')){
-      this.albumsBtn.nativeElement.classList.remove('active');//Desactiva el btn
-      this.showAlbums=false;
-    }else{
-      this.albumsBtn.nativeElement.classList.add('active');//Activa el btn
-      this.searchAlbums(this.term);
-      this.showAlbums=true;
-    }
-  }
 
   searchTracks() : void{
     this.spotifyService.searchTracks(this.term).subscribe(
@@ -75,16 +66,21 @@ export class SeachPageComponent {
       (error) => console.error(error)
     );
   }
-  filterByTrack(){
-    if (this.trackBtn.nativeElement.classList.contains('active')){
-      this.trackBtn.nativeElement.classList.remove('active');//Desactiva el btn
-      this.showTracks=false;
-    }else{
-      this.trackBtn.nativeElement.classList.add('active');//Activa el btn
-      this.searchTracks();
-      this.showTracks=true;
-      console.log(this.storageService.getItem('searchedQueries'));
-    }
+  filterByAlbum() {
+    this.showAlbums = true;
+    this.showTracks = false;
+    this.searchAlbums(this.term);
+  }
+  filterByTrack() {
+    this.showAlbums = false;
+    this.showTracks = true;
+    this.searchTracks();
   }
 
+  reSearchTerm(term: string): void {
+    this.term = term;
+    this.searchAlbums(term);
+    this.showAlbums = true;
+    console.log("Termino rebuscado: ",term)
+  }
 }

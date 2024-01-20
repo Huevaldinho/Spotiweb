@@ -10,32 +10,34 @@ import { FormsModule } from '@angular/forms';
   styles: ``
 })
 export class SeachBoxComponent {
-  @Input()
-  public placeholder: string = '';
+  @Input() public placeholder: string = '';
+  @Input() public value: string = '';
 
-  constructor (private storageService: StorageService){}
+  public input!: string;//Para que se inicialice "!:" sin tener que hacerlo en el constructor
 
-  ngOnInit():void{
+  constructor(private storageService: StorageService) { }
+
+
+  @Output()
+  public onValue = new EventEmitter<string>();
+  emitValue(value: string): void {
+    this.onValue.emit(value);
+  }
+
+
+  ngOnInit(): void {
     const storedData = localStorage.getItem('returnFlag');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
       if (parsedData === true) {
         const queries = this.storageService.getItem('searchedQueries');
         localStorage.removeItem('returnFlag')
-        if (queries){
+        if (queries) {
           this.input = queries[0]
           this.emitValue(this.input)
         }
       }
     }
-}
-
-  public input!: string;//Para que se inicialice "!:" sin tener que hacerlo en el constructor
-
-  @Output()
-  public onValue = new EventEmitter<string>();
-  emitValue(value: string): void {
-    console.log("se llama aca")
-    this.onValue.emit(value);
   }
+
 }

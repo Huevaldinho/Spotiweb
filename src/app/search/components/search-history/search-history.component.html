@@ -1,0 +1,10 @@
+<div class="text-white">
+  <h3>Búsqueda anteriores:</h3>
+  <ul class="list-group">
+    @for(term of this.searchedTerms ; track $index){
+    <li #term (click)="emitValue(term)" class="list-group-item">
+      {{ term }}
+    </li>
+    }
+  </ul>
+</div>

@@ -3,37 +3,71 @@
   <shared-seach-box
     (onValue)="searchAlbums($event)"
     placeholder="Buscar cancion o artista"
+    [value]="this.term"
   ></shared-seach-box>
-
-  <div class="btn-group p-1 m-1 " role="group" aria-label="Default button group">
-    <button type="button"
-            class="btn btn-outline-success"
-            (click)="this.filterByAlbum()"
-            #albumsBtn
+  <!--Search filter-->
+  <div
+    class="btn-group my-2"
+    role="group"
+    aria-label="Basic radio toggle button group"
+  >
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio1"
+      autocomplete="off"
+      checked
+    />
+    <label
+      class="btn btn-outline-success"
+      for="btnradio1"
+      (click)="this.filterByAlbum()"
+      >Albums</label
     >
-      Albums
-    </button>
-    <button type="button"
-            class="btn btn-outline-success"
-            (click)="this.filterByTrack()"
-            #trackBtn
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio2"
+      autocomplete="off"
+    />
+    <label
+      class="btn btn-outline-success"
+      for="btnradio2"
+      (click)="this.filterByTrack()"
+      >Canciones</label
     >
-      Canciones
-    </button>
   </div>
 </div>
 
-<!--Search result-->
-<div class= "bg-dark flex-fill p-3 rounded text-center mt-5 mx-3"
-     id   = "searchResultContainer"  >
-    <!--Inyects the search result into the card list component-->
-    @if(this.albums.length>0 || this.tracks.length>0){
-      <shared-spoty-card-list
-          [albums]="this.albums"
-          [tracks]="this.tracks"
-          [showAlbums]="this.showAlbums"
-          [showTracks]="this.showTracks"
-      ></shared-spoty-card-list>
-    }
-
+<div class="row">
+  <div class="grid">
+    <div class="col-fixed" style="width: 300px">
+      <div class="text-center p-3 border-round-sm font-bold">
+        <search-history [searchedTerms]="this.searchedTerms" (onValue)="reSearchTerm($event)"></search-history>
+      </div>
+    </div>
+    <div class="col">
+      <div class="text-center p-2 border-round-sm font-bold">
+        <!--Search result-->
+        <div
+          class="bg-dark rounded text-center p-3 m-1"
+          id="searchResultContainer"
+        >
+          <!--Inyects the search result into the card list component-->
+          @if(this.albums.length>0 || this.tracks.length>0){
+          <shared-spoty-card-list
+            [albums]="this.albums"
+            [tracks]="this.tracks"
+            [showAlbums]="this.showAlbums"
+            [showTracks]="this.showTracks"
+          ></shared-spoty-card-list>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+div
