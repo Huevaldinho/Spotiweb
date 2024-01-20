@@ -2,6 +2,6 @@
     type="text"
     class="form-control text-center"
     [placeholder]="placeholder"
-    (keyup.enter)="emitValue (input.value)"
-    #input
+    (keyup.enter)="emitValue (input)"
+    [(ngModel)] = "input"
 >
