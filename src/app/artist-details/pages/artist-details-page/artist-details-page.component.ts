@@ -1,39 +1,41 @@
 import { Component } from '@angular/core';
 import { SpotifyService } from '../../../shared/services/spotify.service';
-import { AlbumElement, Artist, TracksItem, Tracks} from '../../../shared/interfaces/spotify.interfaces';
+import { AlbumElement, Artist, TracksItem, Tracks } from '../../../shared/interfaces/spotify.interfaces';
 import { MusicTableComponent } from "../../../shared/components/music-table/music-table.component";
 import { Router, ActivatedRoute } from '@angular/router';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
-    selector: 'artist-details-page',
-    standalone: true,
-    templateUrl: './artist-details-page.component.html',
-    styles: ``,
-    imports: [MusicTableComponent]
+  selector: 'artist-details-page',
+  standalone: true,
+  templateUrl: './artist-details-page.component.html',
+  styles: ``,
+  imports: [MusicTableComponent]
 })
 export class ArtistDetailsPageComponent {
 
   private normalized: boolean = false;
   public album!: AlbumElement;
   public artist!: Artist;
-  public songsList: TracksItem[] =[];
+  public songsList: TracksItem[] = [];
   public typeInfo!: string;
   public artistId!: string;
 
   constructor(
-      private spotifyService: SpotifyService,
-      private route:ActivatedRoute,
-      private router: Router
-  ){}
+    private spotifyService: SpotifyService,
+    private storageService: StorageService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.route.params.subscribe(params => {
       this.typeInfo = params['type'];
       this.artistId = params['artistId']
-      if (this.typeInfo==='album'){ // Albums or singles or compilation
-        this.albumInfo( params['id']);
-        this.artistInfo( params['artistId'])
-      }else{
+      if (this.typeInfo === 'album') { // Albums or singles or compilation
+        this.albumInfo(params['id']);
+        this.artistInfo(params['artistId'])
+      } else {
         this.normalized = true;
         this.artistInfo(this.artistId);
         this.topSongInfo(this.artistId);
@@ -42,7 +44,7 @@ export class ArtistDetailsPageComponent {
   }
 
   //todo se repite varias veces
-  public normalizedData():TracksItem[]{
+  public normalizedData(): TracksItem[] {
     if (!this.normalized) {
       let emptyTracks: Tracks = {
         href: '',
@@ -80,27 +82,28 @@ export class ArtistDetailsPageComponent {
     return this.songsList;
   }
 
-  backToSearch(): void{
-    this.router.navigate(['/search']);
+  backToSearch(): void {
+    console.log('Debe regresar a la ruta: ', this.storageService.getItem('route'));
+    this.storageService.getItem('route')?.length > 0 ? this.router.navigate(['/search']) : this.router.navigate(['/']);
   }
 
-  topSongInfo(id: string):void{
+  topSongInfo(id: string): void {
     this.spotifyService.topSongsInfo(id).subscribe(
-      (response) => {this.songsList = response, console.log(this.songsList)},
+      (response) => { this.songsList = response, console.log(this.songsList) },
       (error) => console.error(error)
     );
   }
 
-  artistInfo(id: string):void{
+  artistInfo(id: string): void {
     this.spotifyService.artistInfo(id).subscribe(
-      (response) => {this.artist = response},
+      (response) => { this.artist = response },
       (error) => console.error(error)
     );
   }
 
   albumInfo(id: string): void {
     this.spotifyService.albumInfo(id).subscribe(
-      (response) => {this.album = response},
+      (response) => { this.album = response },
       (error) => console.error(error)
     );
   }
