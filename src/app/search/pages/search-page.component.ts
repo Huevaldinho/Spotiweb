@@ -32,8 +32,7 @@ export class SeachPageComponent {
     this.searchedTerms = this.storageService.getItem('searchedQueries');
     const lastTerm = this.storageService.getTerm();
     if (lastTerm.length > 0) {
-      this.updateTerm(lastTerm[0]);
-      this.search(this.term);
+      this.search(lastTerm[0]);
     }
   }
 
@@ -42,10 +41,11 @@ export class SeachPageComponent {
     this.storageService.setItem('term', [this.term]);
   }
   search(term: string): void {
+    this.updateTerm(term);
     if (this.showAlbums) {
-      this.searchAlbums(term);
+      this.filterByAlbum();
     } else {
-      this.searchTracks(term);
+      this.filterByTrack();
     }
   }
   searchAlbums(term: string): void {
@@ -57,8 +57,6 @@ export class SeachPageComponent {
       this.searchedTerms.unshift(term);//para meter el termino al principio del array
     }
     this.storageService.setItem('searchedQueries', this.searchedTerms);
-
-
     this.spotifyService.searchAlbums(term).subscribe(
       (response) => {
         if (response) {
@@ -78,6 +76,7 @@ export class SeachPageComponent {
     } else {
       this.searchedTerms.unshift(term);//para meter el termino al principio del array
     }
+    this.storageService.setItem('searchedQueries', this.searchedTerms);
     this.spotifyService.searchTracks(term).subscribe(
       (response) => {
         if (response !== null) {
@@ -105,11 +104,19 @@ export class SeachPageComponent {
   }
 
   reSearchTerm(term: string): void {
-    this.term = term;
+    this.updateTerm(term);
     if (this.showAlbums) {
       this.filterByAlbum();
     } else {
       this.filterByTrack();
     }
   }
+
+  get getTracks(): TracksItem[] {
+    return this.tracks;
+  }
+  get getAlbums():AlbumElement[] {
+    return this.albums;
+  }
 }
+
