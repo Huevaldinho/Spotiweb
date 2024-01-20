@@ -99,7 +99,7 @@ export class SpotifyService {
   artistInfo(id: string) : Observable<Artist> {
     const url = `${this.apiUrl}/artists/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,
+      'Authorization': `Bearer BQBhrYLEUzmnk5fJ7hSzZa_fUVaJTDa6lCgixBshja4DUjunIydi5fNnuHs_0KG52R3mPCAvRyXHhivq_GhF-fb1sKLLNGdSYuFYJqjilBYip9EW4Bc`,
       // Add any other headers if needed
     });
     return this.httpClient.get<Artist>(url, { headers }).pipe(
@@ -112,7 +112,7 @@ export class SpotifyService {
   albumInfo(id: string): Observable<AlbumElement> {
     const url = `${this.apiUrl}/albums/${id}`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,
+      'Authorization': `Bearer BQBhrYLEUzmnk5fJ7hSzZa_fUVaJTDa6lCgixBshja4DUjunIydi5fNnuHs_0KG52R3mPCAvRyXHhivq_GhF-fb1sKLLNGdSYuFYJqjilBYip9EW4Bc`,
       // Agrega cualquier otro encabezado si es necesario
     });
     return this.httpClient.get<AlbumElement>(url, { headers }).pipe(
@@ -125,7 +125,7 @@ export class SpotifyService {
    topSongsInfo(id: string): Observable<TracksItem[]> {
     const url = `${this.apiUrl}/artists/${id}/top-tracks?market=ES`;
     const headers = new HttpHeaders({
-      'Authorization': `Bearer BQA6mRhG_OHpw8-6RvgR8w2l0n-NcUBYNMbWrnsmMAsDJgnKeLrM28S4WUXku-2BAWFJb6_4qadaHo5o_XDvj8oa27OACjrbsxtD2n6oO3Q6sN2wjNQ`,  // Reemplaza esto con tu token de Spotify
+      'Authorization': `Bearer BQBhrYLEUzmnk5fJ7hSzZa_fUVaJTDa6lCgixBshja4DUjunIydi5fNnuHs_0KG52R3mPCAvRyXHhivq_GhF-fb1sKLLNGdSYuFYJqjilBYip9EW4Bc`,  // Reemplaza esto con tu token de Spotify
       // Agrega cualquier otro encabezado si es necesario
     });
 
