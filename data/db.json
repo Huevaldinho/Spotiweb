@@ -1,0 +1,104 @@
+{
+  "users": [
+    {
+      "usuario": "John Doe",
+      "email": "john.due@gmail.com",
+      "password": "123456",
+      "historialBusqueda": [
+        "Nirvana",
+        "Fred Again..",
+        "Fade to black",
+        "Innerbloom"
+      ]
+    },
+    {
+      "usuario": "Jane Smith",
+      "email": "jane.smith@gmail.com",
+      "password": "password123",
+      "historialBusqueda": [
+        "Imagine Dragons",
+        "Radiohead",
+        "Bohemian Rhapsody",
+        "Stairway to Heaven"
+      ]
+    },
+    {
+      "usuario": "Carlos Rodriguez",
+      "email": "carlos.rodriguez@gmail.com",
+      "password": "qwerty",
+      "historialBusqueda": [
+        "The Weeknd",
+        "Blinding Lights",
+        "Shape of You",
+        "Despacito"
+      ]
+    },
+    {
+      "usuario": "Emily Johnson",
+      "email": "emily.johnson@gmail.com",
+      "password": "ilovecoding",
+      "historialBusqueda": [
+        "Taylor Swift",
+        "Lover",
+        "Shake It Off",
+        "Blank Space"
+      ]
+    },
+    {
+      "usuario": "Daniel Martinez",
+      "email": "daniel.martinez@gmail.com",
+      "password": "securepass",
+      "historialBusqueda": ["Coldplay", "Fix You", "Viva la Vida", "Yellow"]
+    },
+    {
+      "usuario": "Sophia Brown",
+      "email": "sophia.brown@gmail.com",
+      "password": "brownie",
+      "historialBusqueda": [
+        "Ed Sheeran",
+        "Thinking Out Loud",
+        "Photograph",
+        "Castle on the Hill"
+      ]
+    },
+    {
+      "usuario": "Alex Hernandez",
+      "email": "alex.hernandez@gmail.com",
+      "password": "musiclover",
+      "historialBusqueda": [
+        "Adele",
+        "Someone Like You",
+        "Hello",
+        "Rolling in the Deep"
+      ]
+    },
+    {
+      "usuario": "Olivia White",
+      "email": "olivia.white@gmail.com",
+      "password": "whitestar",
+      "historialBusqueda": [
+        "Maroon 5",
+        "Sugar",
+        "Girls Like You",
+        "Moves Like Jagger"
+      ]
+    },
+    {
+      "usuario": "Gabriel Garcia",
+      "email": "gabriel.garcia@gmail.com",
+      "password": "guitarhero",
+      "historialBusqueda": [
+        "Queen",
+        "We Will Rock You",
+        "Bohemian Rhapsody",
+        "Another One Bites the Dust"
+      ]
+    },
+    {
+      "usuario": "Lily Taylor",
+      "email": "lily.taylor@gmail.com",
+      "password": "flowerpower",
+      "historialBusqueda": ["Imagine Dragons", "Believer", "Thunder", "Demons"]
+    }
+  ]
+}
