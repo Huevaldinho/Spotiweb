@@ -27,11 +27,17 @@ export class SeachPageComponent {
     private storageService: StorageService,
   ) { }
 
-  ngOnInit(): void {//* Para que se cargue el historial
+  ngOnInit(): void {
     this.spotifyService.getAccessToken_();
     this.searchedTerms = this.storageService.getItem('searchedQueries');
   }
-
+  search(term: string): void {
+    if (this.showAlbums) {
+      this.searchAlbums(term);
+    } else {
+      this.searchTracks(term);
+    }
+  }
   searchAlbums(term: string): void {
     this.term = term;
     this.searchedTerms.unshift(term);//para meter el termino al principio del array
@@ -41,20 +47,22 @@ export class SeachPageComponent {
         if (response) {
           this.albums = response;
           this.showAlbums = true;
+          this.showTracks = false;
         }
       },
       (error) => console.error(error)
     );
   }
-
-  searchTracks(): void {
-    console.log("first term: ", this.term)
-    this.spotifyService.searchTracks(this.term).subscribe(
+  searchTracks(term: string): void {
+    this.term = term;
+    this.searchedTerms.unshift(term);//para meter el termino al principio del array
+    this.storageService.setItem('searchedQueries', this.searchedTerms);
+    this.spotifyService.searchTracks(term).subscribe(
       (response) => {
         if (response !== null) {
           this.tracks = response;
-          console.log("respuesta canciones: ", response)
           this.showTracks = true;
+          this.showAlbums = false;
         }
       },
       (error) => console.error(error)
@@ -70,23 +78,19 @@ export class SeachPageComponent {
     this.showAlbums = false;
     this.showTracks = true;
     this.albums = [];
-    this.searchTracks();
+    this.searchTracks(this.term);
   }
 
   reSearchTerm(term: string): void {
     this.term = term;
-    //Revisar cual filtro está activo para realizar la busqueda correspondiente
     if (this.showAlbums) {
       this.searchAlbums(term);
       this.showAlbums = true;
       this.showTracks = false;
-    }else{
-      this.searchTracks();
+    } else {
+      this.searchTracks(this.term);
       this.showAlbums = false;
       this.showTracks = true;
     }
-
-
-    console.log("Termino rebuscado: ", term)
   }
 }
