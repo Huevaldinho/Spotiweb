@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SpotifyService } from '../../shared/services/spotify.service';
 import { AlbumElement, TracksItem } from '../../shared/interfaces/spotify.interfaces';
@@ -41,7 +41,6 @@ export class SeachPageComponent {
         if (response) {
           this.albums = response;
           this.showAlbums = true;
-          console.log(this.storageService.getItem('searchedQueries'));
         }
       },
       (error) => console.error(error)
@@ -49,10 +48,12 @@ export class SeachPageComponent {
   }
 
   searchTracks(): void {
+    console.log("first term: ", this.term)
     this.spotifyService.searchTracks(this.term).subscribe(
       (response) => {
         if (response !== null) {
           this.tracks = response;
+          console.log("respuesta canciones: ", response)
           this.showTracks = true;
         }
       },
@@ -62,18 +63,30 @@ export class SeachPageComponent {
   filterByAlbum() {
     this.showAlbums = true;
     this.showTracks = false;
+    this.tracks = [];
     this.searchAlbums(this.term);
   }
   filterByTrack() {
     this.showAlbums = false;
     this.showTracks = true;
+    this.albums = [];
     this.searchTracks();
   }
 
   reSearchTerm(term: string): void {
     this.term = term;
-    this.searchAlbums(term);
-    this.showAlbums = true;
+    //Revisar cual filtro está activo para realizar la busqueda correspondiente
+    if (this.showAlbums) {
+      this.searchAlbums(term);
+      this.showAlbums = true;
+      this.showTracks = false;
+    }else{
+      this.searchTracks();
+      this.showAlbums = false;
+      this.showTracks = true;
+    }
+
+
     console.log("Termino rebuscado: ", term)
   }
 }
