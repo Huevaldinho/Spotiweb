@@ -50,6 +50,7 @@ export class SpotyCardComponent {
     this.router.navigate(['/artist', 'track', this.id_,this.artistId]);
   }
   goToAlbum(): void {
+    if (this.type_ === 'track') return;
     //this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
     //this.searchedTerms.unshift(this.cardTitle);//para meter el termino al principio del array
     //this.storageService.setItem('searchedQueries', this.searchedTerms);

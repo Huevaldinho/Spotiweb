@@ -29,9 +29,6 @@ export class SeachPageComponent {
 
   ngOnInit(): void {
     this.spotifyService.getAccessToken_();
-  }
-  //Para que ingrese el ultimo termino buscado en el input
-  ngAfterViewInit(): void {
     this.searchedTerms = this.storageService.getItem('searchedQueries');
     const lastTerm = this.storageService.getTerm();
     if (lastTerm.length > 0) {
