@@ -7,7 +7,7 @@
   ></shared-seach-box>
   <!--Search filter-->
   <div
-    class="btn-group my-2"
+    class="d-flex btn-group my-3 px-2 justify-content-center align-items-center"
     role="group"
     aria-label="Basic radio toggle button group"
   >
@@ -46,7 +46,7 @@
 <div class="row">
     <!--History-->
     <div class="col-2 sm:col-3 xl:col-4">
-      <div class="text-center p-3 border-round-sm font-bold">
+      <div class="text-center px-3 border-round-sm font-bold">
         @if(this.searchedTerms.length > 0){
           <search-history
           [searchedTerms]="this.searchedTerms"

@@ -90,7 +90,7 @@ export class ArtistDetailsPageComponent {
 
   topSongInfo(id: string): void {
     this.spotifyService.topSongsInfo(id).subscribe(
-      (response) => { this.songsList = response, console.log(this.songsList) },
+      (response) => { this.songsList = response},
       (error) => console.error(error)
     );
   }

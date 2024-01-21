@@ -17,8 +17,7 @@ export class MusicTableComponent {
   public tracks!: TracksItem[];
 
   onClick(str: TracksItem): void{
-    console.log("se cae")
-    console.log("este es el nombre del album", str);
+    
   }
 
   public embedURL(id: string): SafeResourceUrl{

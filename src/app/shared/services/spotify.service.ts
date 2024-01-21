@@ -49,7 +49,6 @@ export class SpotifyService {
 
   searchAlbums(query: string): Observable<AlbumElement[] | null> {
     const url = `${this.apiUrl}/search/?q=${query}&type=album`;
-    console.log("Requesting:", url);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
     });
@@ -66,7 +65,6 @@ export class SpotifyService {
 
   searchTracks(query: string): Observable<TracksItem[] | null> {
     const url = `${this.apiUrl}/search/?q=${query}&type=track`;
-    console.log("Requesting:", url);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
     });
