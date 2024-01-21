@@ -40,10 +40,7 @@ export class SpotyCardComponent {
 
   ngOnInit(): void {
     this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
-    console.log("este es el track preview", this.trackPreview);
-
     if( this.type_ === 'album'){
-      console.log("este es el id", this.id_)
       this.spotifyService.albumInfo(this.id_).subscribe(
         album => this.trackPreview = album.tracks.items[0].preview_url
       )

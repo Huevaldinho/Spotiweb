@@ -44,9 +44,8 @@
 </div>
 
 <div class="row">
-  <div class="grid">
     <!--History-->
-    <div class="col-fixed" style="width: 300px">
+    <div class="col-2 sm:col-3 xl:col-4">
       <div class="text-center p-3 border-round-sm font-bold">
         @if(this.searchedTerms.length > 0){
           <search-history
@@ -56,11 +55,11 @@
         }
       </div>
     </div>
-    <div class="col">
-      <div class="text-center p-2 border-round-sm font-bold">
+    <div class="col sm:col-4 md:col-5 xl:col-4">
+      <div class="text-center border-round-sm ">
         <!--Search result-->
         <div
-          class="bg-dark rounded text-center p-3 m-1"
+          class="bg-dark rounded text-center "
           id="searchResultContainer"
         >
         <shared-spoty-card-list
@@ -72,7 +71,6 @@
         </div>
       </div>
     </div>
-  </div>
 </div>
 
 div

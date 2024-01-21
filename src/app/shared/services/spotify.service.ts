@@ -78,7 +78,6 @@ export class SpotifyService {
   }
   searchNewAlbumReleases(): Observable<AlbumElement[] | null> {
     const url = `${this.apiUrl}/browse/new-releases`;
-    console.log("Requesting:", url);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getAccessToken_()}`,
     });
