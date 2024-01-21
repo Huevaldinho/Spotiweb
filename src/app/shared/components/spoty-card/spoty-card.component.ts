@@ -42,12 +42,12 @@ export class SpotyCardComponent {
     this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
     console.log("este es el track preview", this.trackPreview);
 
-    // if( this.type_ === 'album'){
-    //   console.log("este es el id", this.id_)
-    //   this.spotifyService.albumInfo(this.id_).subscribe(
-    //     album => this.trackPreview = album.tracks.items[0].preview_url
-    //   )
-    // }
+    if( this.type_ === 'album'){
+      console.log("este es el id", this.id_)
+      this.spotifyService.albumInfo(this.id_).subscribe(
+        album => this.trackPreview = album.tracks.items[0].preview_url
+      )
+    }
   }
   goToArtist(): void {
     //Guarde la ruta a la que tiene que regresar
