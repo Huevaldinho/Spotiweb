@@ -49,16 +49,13 @@ export class SpotyCardComponent {
     //   )
     // }
   }
-
-  goToArtist(artistName: string): void {
+  goToArtist(): void {
     //Guarde la ruta a la que tiene que regresar
     if (this.activeRoute.snapshot.url.length===0){
       this.storageService.setItem('route',[])
     }else{
       this.storageService.setItem('route',[this.activeRoute.snapshot.url[0].path])
     }
-    console.log(this.storageService.getItem('route'))
-
     this.router.navigate(['/artist', 'track', this.id_,this.artistId]);
   }
   goToAlbum(): void {
@@ -71,7 +68,7 @@ export class SpotyCardComponent {
 
   toggleAudio() {
     const audioElement = this.audio.nativeElement as HTMLAudioElement;
-    console.log("track to play",this.trackPreview)
+    audioElement.src = this.trackPreview;
     if(audioElement) {
       if(this.isPlaying) {
         audioElement.pause();
@@ -86,9 +83,6 @@ export class SpotyCardComponent {
     return this.cardTitle.length > 20 ? this.cardTitle.substr(0, 20) + '...' : this.cardTitle;
   }
 
-  get audioSource(): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
-  }
 
   onHover(): void {
     this.isHovered = true;

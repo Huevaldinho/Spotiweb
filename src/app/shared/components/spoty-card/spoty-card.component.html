@@ -27,14 +27,16 @@
     }
   </div>
   <audio #audio>
-    <source [src]="this.trackPreview" type="audio/mpeg" />
+    <!-- <source src="https://p.scdn.co/mp3-preview/efbeb7f8ce05fd86b7467d13df21d147ed316e4a?cid=0cc4e24065854961b2b352c93913eee8" type="audio/mpeg"> -->
+    <source type="audio/mpeg" />
+    Tu navegador no soporta el elemento de audio.
   </audio>
   <div class="card-body">
     <h5 class="card-title" (click)="goToAlbum()">{{ this.cardTitle }}</h5>
   </div>
   <div class="card-body">
     @for(artist of this.artitsList;track $index){
-    <span class="badge text-bg-success mx-1 p-1" (click)="goToArtist(artist)">
+    <span class="badge text-bg-success mx-1 p-1" (click)="goToArtist()">
       {{ this.artist }}
     </span>
     }
