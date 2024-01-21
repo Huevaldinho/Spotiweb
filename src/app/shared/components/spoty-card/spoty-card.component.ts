@@ -4,6 +4,7 @@ import { StorageService } from '../../services/storage.service';
 import { SpotifyService } from '../../services/spotify.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterModule,ActivatedRoute } from '@angular/router';
+import { AlbumElement } from '../../interfaces/spotify.interfaces';
 @Component({
   selector: 'shared-spoty-card',
   standalone: true,
@@ -21,6 +22,8 @@ export class SpotyCardComponent {
   @Input() public artistId: string = '';
   @Input() public audioUrl = ''; //TODO: corregir audio de album y tracks
   @Input() public trackPreview: string='';
+
+  public album?: AlbumElement;
   public searchedTerms: string[] = [];
   public isPlaying: boolean = false;
   public isHovered: boolean = false;
@@ -37,7 +40,16 @@ export class SpotyCardComponent {
 
   ngOnInit(): void {
     this.searchedTerms = this.storageService.getItem('searchedQueries') as string[];
+    console.log("este es el track preview", this.trackPreview);
+
+    // if( this.type_ === 'album'){
+    //   console.log("este es el id", this.id_)
+    //   this.spotifyService.albumInfo(this.id_).subscribe(
+    //     album => this.trackPreview = album.tracks.items[0].preview_url
+    //   )
+    // }
   }
+
   goToArtist(artistName: string): void {
     //Guarde la ruta a la que tiene que regresar
     if (this.activeRoute.snapshot.url.length===0){
@@ -85,5 +97,4 @@ export class SpotyCardComponent {
   onLeave(): void {
     this.isHovered = false;
   }
-
 }
