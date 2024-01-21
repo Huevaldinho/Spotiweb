@@ -5,10 +5,12 @@ import { SpotifyService } from '../../services/spotify.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterModule,ActivatedRoute } from '@angular/router';
 import { AlbumElement } from '../../interfaces/spotify.interfaces';
+import { TitlePipe } from '../../pipes/shared.pipe';
+
 @Component({
   selector: 'shared-spoty-card',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule,TitlePipe],
   templateUrl: './spoty-card.component.html',
   styles: ``
 })

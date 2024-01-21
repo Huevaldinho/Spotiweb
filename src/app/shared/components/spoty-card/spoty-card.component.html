@@ -32,12 +32,12 @@
     Tu navegador no soporta el elemento de audio.
   </audio>
   <div class="card-body">
-    <h5 class="card-title" (click)="goToAlbum()">{{ this.cardTitle }}</h5>
+    <h5 class="card-title" (click)="goToAlbum()" >{{ this.cardTitle | titleFixed }}</h5>
   </div>
   <div class="card-body">
     @for(artist of this.artitsList;track $index){
     <span class="badge text-bg-success mx-1 p-1" (click)="goToArtist()">
-      {{ this.artist }}
+      {{ this.artist  | titleFixed}}
     </span>
     }
   </div>
